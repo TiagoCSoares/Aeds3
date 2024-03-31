@@ -1,5 +1,10 @@
 {
     "files.associations": {
-        "fila.h": "c"
+        "fila.h": "c",
+        "pilha.h": "c",
+        "grafo.h": "c",
+        "labirinto.h": "c",
+        "stdio.h": "c",
+        "stdlib.h": "c"
     }
 }

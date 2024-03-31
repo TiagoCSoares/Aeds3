@@ -1,7 +1,9 @@
-#include "pilha.h"
-#include "grafo.h"
-#include "fila.h"
+#include "Estruturas/pilha.h"
+#include "Grafo/grafo.h"
+#include "Estruturas/fila.h"
 #include "labirinto.h"
+#include "Buscas/buscaPorLargura.c"
+#include "Buscas/buscaPorProfundidade.c"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -70,11 +72,12 @@ void buscarEmLargura(char labirinto[LINHAS][COLUNAS], No* nos[LINHAS][COLUNAS], 
         entrada->visitado = true;
 
         No* paiSaida = buscaPorLargura(nos, *entrada, *saida, &fila, labirinto);
-        escreverOutputFila("Output/LarguraOutput.txt", &fila, paiSaida, *saida, *entrada);
+        escreverOutputFila("Output/LarguraOutput.txt", &fila, paiSaida);
 
         free(nomeArquivoCompleto);
     }
 }
+
 
 void criarPastaSeNaoExistir(const char *nomePasta) {
     struct dirent *dir;

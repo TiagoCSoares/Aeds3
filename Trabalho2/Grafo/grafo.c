@@ -1,10 +1,7 @@
-#include "grafo.h"
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "pilha.h"
-#include "fila.h"
-#include "labirinto.h"
+#include "grafo.h"
 
 void adicionarAresta(Aresta** listaAdjacencia, No* destino) {
     Aresta* novaAresta = (Aresta*)malloc(sizeof(Aresta));
@@ -13,7 +10,8 @@ void adicionarAresta(Aresta** listaAdjacencia, No* destino) {
     *listaAdjacencia = novaAresta;
 }
 
-// Função para criar o grafo a partir do labirinto
+
+
 void criarGrafo(char labirinto[LINHAS][COLUNAS], No* nos[LINHAS][COLUNAS]) {
     for (int i = 0; i < LINHAS; i++) {
         for (int j = 0; j < COLUNAS; j++) {
