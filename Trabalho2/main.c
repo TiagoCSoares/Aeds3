@@ -97,7 +97,6 @@ int main() {
         No *entrada = NULL;
         No *saida = NULL;
         entradaSaida(&entrada, &saida, labirinto, nos);
-        printf("entrada%d,%d\n", entrada->linha,entrada->coluna);
         
         Fila fila;
         inicializarFila(&fila);
@@ -105,7 +104,6 @@ int main() {
         entrada->visitado = true;
 
         No* paiSaida = buscaPorLargura(nos, *entrada, *saida, &fila, labirinto);
-        printf("paiSaida\n");
         if(paiSaida == NULL) {
             printf("NULL\n");
         }

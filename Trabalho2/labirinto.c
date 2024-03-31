@@ -136,7 +136,7 @@ void escreverOutputFila(char *caminhoDoArquivo, Fila* fila, No* PaiSaida, No sai
         exit(1);
     }
 
-    fprintf(arquivo, "%d,%d\n", saida.linha, saida.coluna);
+    //fprintf(arquivo, "%d,%d\n", saida.linha, saida.coluna);
 
     No* atual = PaiSaida;
     while (atual != NULL) {
