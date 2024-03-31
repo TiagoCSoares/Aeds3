@@ -10,7 +10,6 @@ typedef struct No {
     int linha;
     int coluna;
     bool visitado;
-    bool percorrido;
     struct Aresta* listaAdjacencia;
 } No;
 

@@ -20,7 +20,6 @@ void criarGrafo(char labirinto[LINHAS][COLUNAS], No* nos[LINHAS][COLUNAS]) {
                 atual->linha = i;
                 atual->coluna = j;
                 atual->visitado = false;
-                atual->percorrido = false;
                 atual->listaAdjacencia = NULL;
 
                 // Adicionar arestas para células adjacentes válidas

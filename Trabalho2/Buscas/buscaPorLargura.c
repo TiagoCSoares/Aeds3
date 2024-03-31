@@ -1,9 +1,8 @@
 #include "../Estruturas/pilha.h"
 #include "../Estruturas/fila.h"
-#include "../labirinto.h"
 #include <stdlib.h>
 
-No* buscaPorLargura(No* nos[LINHAS][COLUNAS], No entrada, No saida, Fila* fila, char labirinto[LINHAS][COLUNAS]) {
+No* buscaPorLargura(No* nos[LINHAS][COLUNAS], No entrada, No saida, Fila* fila) {
     while (!filaVazia(fila)) {
         No* atual = desenfileirar(fila); // Obtemos o próximo nó da fila
 
@@ -20,7 +19,7 @@ No* buscaPorLargura(No* nos[LINHAS][COLUNAS], No entrada, No saida, Fila* fila, 
         while (listaAdjacencia != NULL) {
             No* adjacente = listaAdjacencia->destino;
             // Verifica se o nó adjacente não foi visitado e não é uma parede
-            if (!adjacente->visitado && labirinto[adjacente->linha][adjacente->coluna] != PAREDE) {
+            if (!adjacente->visitado) {
                 // Marca o nó adjacente como visitado
                 adjacente->visitado = true;
                 // Enfileira o nó adjacente e seu nó pai

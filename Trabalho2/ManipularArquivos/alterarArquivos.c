@@ -1,50 +1,9 @@
-#include "labirinto.h"
+#include "../LabirintoOperacoes/labirinto.h"
 #include <stdio.h>
 #include <stdlib.h>
-
-
-
-void lerLabirinto(char *nomeArquivo, char labirinto[LINHAS][COLUNAS]) {
-    FILE *arquivo = fopen(nomeArquivo, "r");
-
-    if(arquivo == NULL) {
-        printf("Erro ao abrir o arquivo %s\n", nomeArquivo);
-        return;
-    }
-
-    for (int i = 0; i < LINHAS; i++) {
-        for (int j = 0; j < COLUNAS; j++) {
-            char c = fgetc(arquivo);
-            labirinto[i][j] = c;
-        }
-        // Descartar o caractere de nova linha
-        fgetc(arquivo);
-    }
-
-    fclose(arquivo);
-}
-
-
-void entradaSaida(No** entrada, 
-            No** saida, 
-            char labirinto[LINHAS][COLUNAS], 
-            No* nos[LINHAS][COLUNAS]) {
-
-    for(int i = 0; i < LINHAS; i++) {
-            for(int j = 0; j < COLUNAS; j++) {
-                if(labirinto[i][j] == ENTRADA) {
-                    *entrada = nos[i][j];
-                } else if(labirinto[i][j] == SAIDA) {
-                    *saida = nos[i][j];
-                }
-            }
-        }
-
-        if (*entrada == NULL || *saida == NULL) {
-            printf("Entrada ou saída não encontrada no labirinto.\n");
-        return;
-        }
-}
+#include <dirent.h>
+#include <sys/stat.h>
+#include "alterarArquivos.h"
 
 
 void escreverOutput(char *caminhoDoArquivo, Pilha pilha) {
@@ -67,6 +26,8 @@ void escreverOutput(char *caminhoDoArquivo, Pilha pilha) {
     fprintf(arquivo, "\n");
     fclose(arquivo);
 }
+
+
 
 
 void escreverOutputFila(char *caminhoDoArquivo, Fila* fila, No* PaiSaida) {
