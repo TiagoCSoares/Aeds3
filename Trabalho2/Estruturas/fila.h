@@ -12,8 +12,8 @@
 typedef struct Fila {
     struct {
         No* filho;
-        No* pai; // Adicionamos um ponteiro para o nó pai
-    } items[LINHAS * COLUNAS];
+        No* pai; 
+    } itens[LINHAS * COLUNAS];
     int frente;
     int fim;
 } Fila;

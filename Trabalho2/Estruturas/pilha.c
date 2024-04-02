@@ -10,19 +10,19 @@ int pilhaVazia(Pilha* pilha) {
 }
 
 void empilhar(Pilha* pilha, No* item) {
-    pilha->items[++pilha->topo] = item;
+    pilha->itens[++pilha->topo] = item;
 }
 
 No* desempilhar(Pilha* pilha) {
     if(pilhaVazia(pilha)) {
         return NULL;
     }
-    return pilha->items[pilha->topo--];
+    return pilha->itens[pilha->topo--];
 }
 
 No* topoDaPilha(Pilha* pilha) {
     if(pilhaVazia(pilha)) {
         return NULL;
     }
-    return pilha->items[pilha->topo];
+    return pilha->itens[pilha->topo];
 }

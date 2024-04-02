@@ -6,6 +6,8 @@
         "labirinto.h": "c",
         "stdio.h": "c",
         "stdlib.h": "c",
-        "dirent.h": "c"
+        "dirent.h": "c",
+        "stdbool.h": "c",
+        "operacoes.h": "c"
     }
 }

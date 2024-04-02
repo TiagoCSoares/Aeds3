@@ -46,8 +46,8 @@ void escreverOutputFila(char *caminhoDoArquivo, Fila* fila, No* PaiSaida) {
         empilhar(&pilha, atual);
         No* pai = NULL;
         for (int i = 0; i <= fila->fim; i++) {
-            if (fila->items[i].filho == atual) {
-                pai = fila->items[i].pai;
+            if (fila->itens[i].filho == atual) {
+                pai = fila->itens[i].pai;
                 break;
             }
         }

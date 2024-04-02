@@ -8,7 +8,7 @@
 
 
 typedef struct Pilha {
-    No* items[LINHAS * COLUNAS];
+    No* itens[LINHAS * COLUNAS];
     int topo;
 } Pilha;
 
