@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include "grafo.h"
+#include <wattsStrogatz.h>
 
-void watts_strogatz(int numVertices, int ligacoesIniciais, float p) {
+void wattsStrogatz(int numVertices, int ligacoesIniciais, float p) {
     No** grafo = criarGrafo(numVertices);
     int i, j, target;
     bool conectado;
