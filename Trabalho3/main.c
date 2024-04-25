@@ -14,7 +14,8 @@
 #include "Estruturas/pilha.h"
 #include "Estruturas/fila.h"
 #include "Grafo/grafo.h"
-#include "Grafo/watts_strogatz.h"
+#include "Grafo/wattsStrogatz.h"
+#include "Grafo/barabasiAlbert.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -42,7 +43,7 @@ int main() {
     int k = 4;   // Cada nó é inicialmente conectado a k vizinhos próximos
     float p = 0.1;  // Probabilidade de reconexão
 
-    watts_strogatz(n, k, p);
+    wattsStrogatz(n, k, p);
 
     return 0;
 }
