@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <wattsStrogatz.h>
+#include "wattsStrogatz.h"
 
 void wattsStrogatz(int numVertices, int ligacoesIniciais, float p) {
     No** grafo = criarGrafo(numVertices);

@@ -1,5 +1,5 @@
-#ifndef watts_H
-#define watts_H
+#ifndef WATTS_H
+#define WATTS_H
 
 #include "grafo.h"
 

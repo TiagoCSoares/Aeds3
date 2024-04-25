@@ -43,7 +43,10 @@ int main() {
     int k = 4;   // Cada nó é inicialmente conectado a k vizinhos próximos
     float p = 0.1;  // Probabilidade de reconexão
 
+    criarPastaSeNaoExistir("Output");
+
     wattsStrogatz(n, k, p);
+    barabasiAlbert(n, k);
 
     return 0;
 }

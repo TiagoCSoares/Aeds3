@@ -53,6 +53,24 @@ void imprimirGrafo(No** grafo, int numVertices) {
     }
 }
 
+int grauNo(No* no) {
+    int contador = 0;
+    Aresta* adj = no->listaAdjacencia;
+    while (adj != NULL) {
+        contador++;
+        adj = adj->proximaAresta;
+    }
+    return contador;
+}
+
+int tamanhoGrafo(No** grafo) {
+    int contador = 0;
+    while (grafo[contador] != NULL) {
+        contador++;
+    }
+    return contador;
+}
+
 
 
 

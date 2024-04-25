@@ -8,6 +8,7 @@
         "stdlib.h": "c",
         "dirent.h": "c",
         "stdbool.h": "c",
-        "operacoes.h": "c"
+        "operacoes.h": "c",
+        "wattsstrogatz.h": "c"
     }
 }

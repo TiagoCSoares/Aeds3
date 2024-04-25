@@ -1,9 +1,9 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <barabasiAlbert.h>
+#include "barabasiAlbert.h"
 
-void barabaseAlbert(int numVertices, int numInicial){
+void barabasiAlbert(int numVertices, int numInicial){
     No** grafo = criarGrafo(numVertices);
 
     int novasConexoes = 2;//rand() % numInicial;
