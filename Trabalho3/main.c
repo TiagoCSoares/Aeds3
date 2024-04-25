@@ -36,8 +36,6 @@ int main() {
     No** grafo = (No**)malloc(numVertices * sizeof(No*));
 
     No* nos[LINHAS];
-    char labirinto[LINHAS];
-
        
     for(int i = 0; i < numVertices; i++) {
         grafo[i] = criarNo(i+1);
