@@ -2,7 +2,7 @@
 TARGET = main
 
 # Lista de arquivos fonte
-SRCS = main.c Estruturas/fila.c Estruturas/pilha.c Grafo/grafo.c LabirintoOperacoes/labirinto.c
+SRCS = main.c Estruturas/fila.c Estruturas/pilha.c Grafo/grafo.c Grafo/watts_strogatz.c
 
 # Comando de compilação
 CC = gcc

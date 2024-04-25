@@ -56,7 +56,7 @@ void imprimirGrafo(No** grafo, int numVertices) {
 
 
 
-void grafoErdosRenyi(No** grafo, int numVertices, float p) {
+/*void grafoErdosRenyi(No** grafo, int numVertices, float p) {
     int i, j;
     for(i = 0; i < numVertices; i++) {
         for(j = i+1; j < numVertices; j++) {
@@ -66,4 +66,4 @@ void grafoErdosRenyi(No** grafo, int numVertices, float p) {
             }
         }
     }
-}
+}*/

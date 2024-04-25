@@ -8,7 +8,7 @@ void watts_strogatz(int numVertices, int ligacoesIniciais, float p) {
     int i, j, target;
     bool conectado;
 
-    srand(time(NULL)); // Inicialização do gerador de números aleatórios
+    //srand(time(NULL)); // Inicialização do gerador de números aleatórios
 
     // Criação do grafo em anel
     for (i = 0; i < numVertices; i++) {

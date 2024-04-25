@@ -14,6 +14,7 @@
 #include "Estruturas/pilha.h"
 #include "Estruturas/fila.h"
 #include "Grafo/grafo.h"
+#include "Grafo/watts_strogatz.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -32,16 +33,16 @@ void liberarNos(No* nos[LINHAS][COLUNAS]) {
 
 int main() {
     
-    int numVertices = (rand() % 50)+25;
+    /*int numVertices = (rand() % 50)+25;
     No** grafo = (No**)malloc(numVertices * sizeof(No*));
 
-    No* nos[LINHAS];
+    No* nos[LINHAS];*/
        
-    for(int i = 0; i < numVertices; i++) {
-        grafo[i] = criarNo(i+1);
-    }
+    int n = 75;  // Número de nós
+    int k = 4;   // Cada nó é inicialmente conectado a k vizinhos próximos
+    float p = 0.1;  // Probabilidade de reconexão
 
-    liberarNos(nos);
+    watts_strogatz(n, k, p);
 
     return 0;
 }
