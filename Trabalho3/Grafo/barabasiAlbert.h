@@ -3,6 +3,6 @@
 
 #include "grafo.h"
 
-void barabaseAlbert(int numVertices, int numInicial);
+void barabasiAlbert(int numVertices, int numInicial);
 
 #endif

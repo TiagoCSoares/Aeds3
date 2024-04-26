@@ -1,7 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#include <wattsStrogatz.h>
+#include "../ManipularArquivos/alterarArquivos.h"
+#include "wattsStrogatz.h"
 
 void wattsStrogatz(int numVertices, int ligacoesIniciais, float p) {
     No** grafo = criarGrafo(numVertices);
@@ -42,8 +43,8 @@ void wattsStrogatz(int numVertices, int ligacoesIniciais, float p) {
         }
     }
 
-
-    imprimirGrafo(grafo, numVertices);
+    escreverOutput("Output/output.txt", grafo, numVertices);
+    //imprimirGrafo(grafo, numVertices);
     // Liberar memória
     liberarMemoria(grafo, numVertices);
 }

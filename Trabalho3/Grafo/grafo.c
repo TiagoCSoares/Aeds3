@@ -17,11 +17,11 @@ void adicionarAresta(Aresta** listaAdjacencia, No* destino, int peso) { //Adicio
 
 void liberarMemoria(No** grafo, int numVertices) {
     for (int i = 0; i < numVertices; i++) {
-        Aresta* adj = grafo[i]->listaAdjacencia;
-        while (adj != NULL) {
-            Aresta* temp = adj;
-            adj = adj->proximaAresta;
-            free(temp);
+        Aresta* atual = grafo[i]->listaAdjacencia;
+        while (atual != NULL) {
+            Aresta* proximo = atual->proximaAresta;
+            free(atual);
+            atual = proximo;
         }
         free(grafo[i]);
     }
@@ -51,6 +51,24 @@ void imprimirGrafo(No** grafo, int numVertices) {
         }
         printf("\n");
     }
+}
+
+int grauNo(No* no) {
+    int contador = 0;
+    Aresta* adj = no->listaAdjacencia;
+    while (adj != NULL) {
+        contador++;
+        adj = adj->proximaAresta;
+    }
+    return contador;
+}
+
+int tamanhoGrafo(No** grafo) {
+    int contador = 0;
+    while (grafo[contador] != NULL) {
+        contador++;
+    }
+    return contador-1;
 }
 
 
