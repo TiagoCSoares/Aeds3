@@ -10,8 +10,9 @@ void wattsStrogatz(int numVertices, int ligacoesIniciais, float p) {
     // Criação do grafo em anel
     for (i = 0; i < numVertices; i++) {
         for (j = 0; j < ligacoesIniciais / 2; j++) {
-            adicionarAresta(&(grafo[i]->listaAdjacencia), grafo[(i + j + 1) % numVertices], 1);
-            adicionarAresta(&(grafo[i]->listaAdjacencia), grafo[(i - j - 1 + numVertices) % numVertices], 1);
+            int peso = rand() % 10 + 1;
+            adicionarAresta(&(grafo[i]->listaAdjacencia), grafo[(i + j + 1) % numVertices], peso);
+            adicionarAresta(&(grafo[i]->listaAdjacencia), grafo[(i - j - 1 + numVertices) % numVertices], peso);
         }
     }
 
@@ -33,8 +34,9 @@ void wattsStrogatz(int numVertices, int ligacoesIniciais, float p) {
                 } while (target == i || conectado);
                 
                 // Atualizar as conexões bidirecionais
-                adicionarAresta(&(grafo[i]->listaAdjacencia), grafo[target], 1);
-                adicionarAresta(&(grafo[target]->listaAdjacencia), grafo[i], 1);
+                int peso = rand() % 10 + 1;
+                adicionarAresta(&(grafo[i]->listaAdjacencia), grafo[target], peso);
+                adicionarAresta(&(grafo[target]->listaAdjacencia), grafo[i], peso);
             }
         }
     }

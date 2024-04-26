@@ -50,7 +50,6 @@ int main() {
     for(int i = 0; i < 5; i++){
         int numVertices = rand() % 50 + 25;
         int numLigacoesIniciais = rand() % 5 + 5;
-        printf("numLIgacoesIniciais: %d\n", numLigacoesIniciais);
         float p = (float)rand() / RAND_MAX * 0.9 + 0.1;
         wattsStrogatz(numVertices, numLigacoesIniciais, p);
     }

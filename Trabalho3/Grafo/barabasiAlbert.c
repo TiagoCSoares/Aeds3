@@ -27,8 +27,9 @@ void barabasiAlbert(int numVertices, int numInicial){
 
             // Se a aresta não existir, adiciona a nova aresta
             if (!arestaExiste) {
-                adicionarAresta(&(grafo[i]->listaAdjacencia), grafo[target], 1);
-                adicionarAresta(&(grafo[target]->listaAdjacencia), grafo[i], 1);
+                int peso = rand() % 10 + 1;
+                adicionarAresta(&(grafo[i]->listaAdjacencia), grafo[target], peso);
+                adicionarAresta(&(grafo[target]->listaAdjacencia), grafo[i], peso);
                 conexoesDoNo[i] += 1;
                 conexoesDoNo[target] += 1;
                 conexoesTotais+=2;
@@ -43,8 +44,9 @@ void barabasiAlbert(int numVertices, int numInicial){
             float probabilidadeConectar = (float)conexoesDoNo[j] / conexoesTotais;
             float chance = ((float)rand() / RAND_MAX);  // Gerar um número aleatório entre 0 e 1
             if (chance <= probabilidadeConectar) { 
-                adicionarAresta(&grafo[i]->listaAdjacencia, grafo[j], 1);
-                adicionarAresta(&(grafo[j]->listaAdjacencia), grafo[i], 1);
+                int peso = rand() % 10 + 1;
+                adicionarAresta(&grafo[i]->listaAdjacencia, grafo[j], peso);
+                adicionarAresta(&(grafo[j]->listaAdjacencia), grafo[i], peso);
                 conexoesDoNo[i]++;
                 conexoesDoNo[j]++;
                 conexoes+=2;
@@ -53,8 +55,9 @@ void barabasiAlbert(int numVertices, int numInicial){
         while(conexoesDoNo[i] == 0){
                 int index = (rand() % i);
                 if(index != i) {
-                    adicionarAresta(&grafo[i]->listaAdjacencia, grafo[index], 1);
-                    adicionarAresta(&(grafo[index]->listaAdjacencia), grafo[i], 1);
+                    int peso = rand() % 10 + 1;
+                    adicionarAresta(&grafo[i]->listaAdjacencia, grafo[index], peso);
+                    adicionarAresta(&(grafo[index]->listaAdjacencia), grafo[i], peso);
                     conexoesDoNo[i]++;
                     conexoesDoNo[index]++;
                     conexoesTotais+=2;     
