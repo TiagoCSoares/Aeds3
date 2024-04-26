@@ -9,5 +9,6 @@ No** criarGrafo(int numVertices);
 void liberarMemoria(No** grafo, int numVertices);
 void imprimirGrafo(No** grafo, int numVertices);
 int grauNo(No* no);
+int tamanhoGrafo(No** grafo);
 
 #endif

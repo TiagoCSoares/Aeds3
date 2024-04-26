@@ -16,6 +16,8 @@
 #include "Grafo/grafo.h"
 #include "Grafo/wattsStrogatz.h"
 #include "Grafo/barabasiAlbert.h"
+#include "ManipularArquivos/alterarArquivos.h"
+#include "ManipularArquivos/operacoes.h"
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -44,8 +46,12 @@ int main() {
     float p = 0.1;  // Probabilidade de reconexão
 
     criarPastaSeNaoExistir("Output");
+    limparArquivo("Output/output.txt");
 
     wattsStrogatz(n, k, p);
+    wattsStrogatz(n, k, p);
+    barabasiAlbert(n, k);
+    barabasiAlbert(n, k);
     barabasiAlbert(n, k);
 
     return 0;

@@ -2,6 +2,7 @@
 #include <stdio.h>
 
 #include "barabasiAlbert.h"
+#include "../ManipularArquivos/alterarArquivos.h"
 
 void barabasiAlbert(int numVertices, int numInicial){
     No** grafo = criarGrafo(numVertices);
@@ -40,27 +41,33 @@ void barabasiAlbert(int numVertices, int numInicial){
 
     
     for(int i = numInicial; i < numVertices; i++){
-        int novasConexoes = 0;
+        int conexoes = 0;
         for(int j = 0; j < i; j++){
             float probabilidadeConectar = (float)conexoesDoNo[j] / conexoesTotais;
             float chance = ((float)rand() / RAND_MAX);  // Gerar um número aleatório entre 0 e 1
             if (chance <= probabilidadeConectar) { 
-                adicionarAresta(&grafo[i]->listaAdjacencia, grafo[j], i);
+                adicionarAresta(&grafo[i]->listaAdjacencia, grafo[j], 1);
                 adicionarAresta(&(grafo[j]->listaAdjacencia), grafo[i], 1);
                 conexoesDoNo[i]++;
                 conexoesDoNo[j]++;
-                novasConexoes+=2;
+                conexoes+=2;
             }
         }
         while(conexoesDoNo[i] == 0){
                 int index = (rand() % i);
-                if(index != i)
-                adicionarAresta(&grafo[i]->listaAdjacencia, grafo[index], i);
-                adicionarAresta(&(grafo[index]->listaAdjacencia), grafo[i], 1);
-                conexoesDoNo[i]++;
-                conexoesDoNo[index]++;
-                conexoesTotais+=2;     
+                if(index != i) {
+                    adicionarAresta(&grafo[i]->listaAdjacencia, grafo[index], 1);
+                    adicionarAresta(&(grafo[index]->listaAdjacencia), grafo[i], 1);
+                    conexoesDoNo[i]++;
+                    conexoesDoNo[index]++;
+                    conexoesTotais+=2;     
+                }
             }
-        conexoesTotais += novasConexoes;
+        conexoesTotais += conexoes;
     }
+
+    //imprimirGrafo(grafo, numVertices);
+    escreverOutput("Output/output.txt", grafo, numVertices);
+    // Liberar memória
+    liberarMemoria(grafo, numVertices);
 }
