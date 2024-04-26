@@ -39,8 +39,8 @@ void wattsStrogatz(int numVertices, int ligacoesIniciais, float p) {
         }
     }
 
-    dijkstra(grafo, numVertices, 0);
     escreverOutputGrafos("Output/grafos.txt", grafo, numVertices);
+    closeness(grafo, numVertices);
     //imprimirGrafo(grafo, numVertices);
     // Liberar memória
     liberarMemoria(grafo, numVertices);

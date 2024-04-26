@@ -4,7 +4,7 @@
 void barabasiAlbert(int numVertices, int numInicial){
     No** grafo = criarGrafo(numVertices);
 
-    int novasConexoes = 2;//rand() % numInicial;
+    int novasConexoes = rand() % numInicial + 2;
     int conexoesTotais = 0;
     int conexoesDoNo[75] = {0};
 

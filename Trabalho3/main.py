@@ -47,7 +47,7 @@ for idx in range(10):
 
     # Desenhar o grafo
     plt.figure()
-    nx.draw(G, pos, node_color=cores_nos, node_size=300, edge_color='black', width=2)
+    nx.draw(G, pos, node_color=cores_nos, node_size=300, edge_color='black', width=1)
     plt.title(f'Grafo {idx+1}')
     
     # Salvar a imagem
