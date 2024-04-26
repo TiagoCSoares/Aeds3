@@ -5,6 +5,7 @@
 #include "../Grafo/grafo.h"
 
 void escreverOutputGrafos(char *caminhoDoArquivo, No** grafo, int numVertices);
+void escreverOutputCloseness(char *caminhoDoArquivo, float* closeness, int numVertices);
 void limparArquivo(char *caminhoDoArquivo);
 
 #endif

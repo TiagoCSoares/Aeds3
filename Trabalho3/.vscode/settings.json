@@ -12,6 +12,7 @@
         "wattsstrogatz.h": "c",
         "functional": "c",
         "algorithm": "c",
-        "barabasialbert.h": "c"
+        "barabasialbert.h": "c",
+        "closeness.h": "c"
     }
 }

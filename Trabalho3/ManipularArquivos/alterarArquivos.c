@@ -19,6 +19,7 @@ void escreverOutputGrafos(char *caminhoDoArquivo, No** grafo, int numVertices) {
         Aresta* adj = grafo[i]->listaAdjacencia;
         while(adj != NULL) {
             fprintf(arquivo, "%d ", adj->destino->posicao);
+            //fprintf(arquivo, "%d ", adj->peso);
             adj = adj->proximaAresta;
         }
         fprintf(arquivo, "\n");

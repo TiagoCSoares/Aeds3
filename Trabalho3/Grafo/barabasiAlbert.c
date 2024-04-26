@@ -1,8 +1,5 @@
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "barabasiAlbert.h"
-#include "../ManipularArquivos/alterarArquivos.h"
+
 
 void barabasiAlbert(int numVertices, int numInicial){
     No** grafo = criarGrafo(numVertices);
@@ -68,6 +65,7 @@ void barabasiAlbert(int numVertices, int numInicial){
 
     //imprimirGrafo(grafo, numVertices);
     escreverOutputGrafos("Output/grafos.txt", grafo, numVertices);
+    closeness(grafo, numVertices);
     // Liberar memória
     liberarMemoria(grafo, numVertices);
 }

@@ -17,6 +17,7 @@
 #include "Grafo/wattsStrogatz.h"
 #include "Grafo/barabasiAlbert.h"
 #include "Grafo/dijkstra.h"
+#include "Grafo/closeness.h"
 #include "ManipularArquivos/alterarArquivos.h"
 #include "ManipularArquivos/operacoes.h"
 
@@ -48,12 +49,15 @@ int main() {
 
     criarPastaSeNaoExistir("Output");
     limparArquivo("Output/grafos.txt");
+    limparArquivo("Output/closeness.txt");
 
-    wattsStrogatz(n, k, p);
+    //wattsStrogatz(n, k, p);
     //wattsStrogatz(n, k, p);
     //barabasiAlbert(n, k);
     //barabasiAlbert(n, k);
-    //barabasiAlbert(n, k);
-
+    for(int i = 0; i < 10; i++){
+        barabasiAlbert(n, k);
+    }
+    
     return 0;
 }
