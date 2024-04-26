@@ -5,7 +5,7 @@
 #include "alterarArquivos.h"
 
 
-void escreverOutput(char *caminhoDoArquivo, No** grafo, int numVertices) {
+void escreverOutputGrafos(char *caminhoDoArquivo, No** grafo, int numVertices) {
 
     FILE *arquivo = fopen(caminhoDoArquivo, "a");
 
@@ -26,6 +26,24 @@ void escreverOutput(char *caminhoDoArquivo, No** grafo, int numVertices) {
 
     fprintf(arquivo, "\n");
     fclose(arquivo);
+}
+
+void escreverOutputCloseness(char *caminhoDoArquivo, float* closeness, int numVertices) {
+    
+        FILE *arquivo = fopen(caminhoDoArquivo, "a");
+    
+        if(arquivo == NULL) {
+            fprintf(stderr, "Erro ao abrir o arquivo.");
+            return;
+        }
+    
+        for(int i = 0; i < numVertices; i++) {
+            fprintf(arquivo, "%d %.4f\n", i, closeness[i]);
+        }
+    
+        fprintf(arquivo, "\n");
+        fclose(arquivo);
+    
 }
 
 

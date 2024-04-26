@@ -47,7 +47,7 @@ int main() {
     float p = 0.1;  // Probabilidade de reconexão
 
     criarPastaSeNaoExistir("Output");
-    limparArquivo("Output/output.txt");
+    limparArquivo("Output/grafos.txt");
 
     wattsStrogatz(n, k, p);
     //wattsStrogatz(n, k, p);
