@@ -1,5 +1,5 @@
-#ifndef barabase_H
-#define barabase_H
+#ifndef BARABASI_H
+#define BARABASI_H
 
 #include "grafo.h"
 
