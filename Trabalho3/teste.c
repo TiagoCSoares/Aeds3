@@ -143,8 +143,13 @@ void printSolution(int dist[], int numVertices) {
 
 // Função que implementa o algoritmo de Dijkstra para um grafo representado
 // por uma matriz de adjacências
-void dijkstra(No** grafo, int numVertices, int raiz) {
-    int dist[numVertices];     // dist[i] será a distância mínima de raiz até i
+int* dijkstra(No** grafo, int numVertices, int raiz) {
+    // dist[i] será a distância mínima de raiz até i
+    int *dist = (int*)malloc(numVertices * sizeof(int)); // Aloca memória para o array dist
+    if (dist == NULL) {
+        // Se a alocação de memória falhar, retorne NULL ou trate o erro de outra forma
+        return NULL;
+    }
     int sptSet[numVertices];   // sptSet[i] será verdadeiro se o vértice i estiver incluído no caminho mais curto
 
     // Inicializa todas as distâncias como infinito e sptSet[] como falso
@@ -174,7 +179,8 @@ void dijkstra(No** grafo, int numVertices, int raiz) {
     }
 
     // Imprime o array de distâncias construído
-    printSolution(dist, numVertices);
+    //printSolution(dist, numVertices);
+    return dist;
 }
 
 
@@ -253,14 +259,31 @@ No** criarGrafo(int numVertices) {
     return grafo;
 }
 
+void closeness(No** grafo, int numVertices) {
+    // Implementar
+    float closeness[numVertices];
+
+    for(int i = 0; i < numVertices; i++) {
+        int *dist = dijkstra(grafo, numVertices, i);
+        int soma = 0;
+        for(int j = 0; j < numVertices; j++) {
+            soma += dist[j];
+        }
+        closeness[i] = (float)soma / (numVertices - 1);
+    }
+}
+
 int main() {
     int n = 75;  // Número de nós
     int k = 8;   // Cada nó é inicialmente conectado a k vizinhos próximos
     float p = 0.1;  // Probabilidade de reconexão
 
     No** grafo = barabaseAlbert(n, k);
-    imprimirGrafo(grafo, n);
-    dijkstra(grafo, n, 0);
+    /*imprimirGrafo(grafo, n);
+    int *dist = (int*)malloc(n * sizeof(int));
+    dist = dijkstra(grafo, n, 0);
+    printSolution(dist, n);*/
+    closeness(grafo, n);
 
     //float chance = ((float)rand() / RAND_MAX);
     //printf("%f\n", chance);
