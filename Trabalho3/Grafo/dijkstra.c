@@ -22,8 +22,14 @@ void printSolution(int dist[], int numVertices) {
 
 
 
-void dijkstra(No** grafo, int numVertices, int raiz) {
-    int dist[numVertices];     // dist[i] será a distância mínima de raiz até i
+int* dijkstra(No** grafo, int numVertices, int raiz) {
+    // dist[i] será a distância mínima de raiz até i
+    int *dist = (int*)malloc(numVertices * sizeof(int)); // Aloca memória para o array dist
+        if (dist == NULL) {
+            // Se a alocação de memória falhar, retorne NULL ou trate o erro de outra forma
+            return NULL;
+        }
+
     int sptSet[numVertices];   // sptSet[i] será verdadeiro se o vértice i estiver incluído no caminho mais curto
 
     // Inicializa todas as distâncias como infinito e sptSet[] como falso
@@ -53,5 +59,6 @@ void dijkstra(No** grafo, int numVertices, int raiz) {
     }
 
     // Imprime o array de distâncias construído
-    printSolution(dist, numVertices);
+    //printSolution(dist, numVertices);
+    return dist;
 }
