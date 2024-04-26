@@ -16,6 +16,7 @@
 #include "Grafo/grafo.h"
 #include "Grafo/wattsStrogatz.h"
 #include "Grafo/barabasiAlbert.h"
+#include "Grafo/dijkstra.h"
 #include "ManipularArquivos/alterarArquivos.h"
 #include "ManipularArquivos/operacoes.h"
 
@@ -49,10 +50,10 @@ int main() {
     limparArquivo("Output/output.txt");
 
     wattsStrogatz(n, k, p);
-    wattsStrogatz(n, k, p);
-    barabasiAlbert(n, k);
-    barabasiAlbert(n, k);
-    barabasiAlbert(n, k);
+    //wattsStrogatz(n, k, p);
+    //barabasiAlbert(n, k);
+    //barabasiAlbert(n, k);
+    //barabasiAlbert(n, k);
 
     return 0;
 }

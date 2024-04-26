@@ -10,6 +10,8 @@
         "stdbool.h": "c",
         "operacoes.h": "c",
         "wattsstrogatz.h": "c",
-        "functional": "c"
+        "functional": "c",
+        "algorithm": "c",
+        "barabasialbert.h": "c"
     }
 }

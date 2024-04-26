@@ -2,11 +2,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include <time.h>
-
-
+#include <limits.h>
 
 #include "Grafo/grafo.h"
-
 
 /*
 Para cada nó existente na lista de nós:
@@ -44,9 +42,21 @@ int grauNo(No* no) {
     return contador;
 }
 
+void imprimirGrafo(No** grafo, int numVertices) {
+    for (int i = 0; i < numVertices; i++) {
+        Aresta* adj = grafo[i]->listaAdjacencia;
+        printf("Node %d: ", i);
+        while (adj != NULL) {
+            printf("%d ", adj->destino->posicao);
+            adj = adj->proximaAresta;
+        }
+        printf("\n");
+    }
+}
 
 
-void watts_strogatz(int numVertices, int ligacoesIniciais, float p) {
+
+/*void watts_strogatz(int numVertices, int ligacoesIniciais, float p) {
     No** grafo = criarGrafo(numVertices);
     int i, j, target;
     bool conectado;
@@ -109,10 +119,67 @@ void watts_strogatz(int numVertices, int ligacoesIniciais, float p) {
     free(grafo);
 }
 
+*/
+
+int minDistance(int dist[], int sptSet[], int numVertices) {
+    int min = INT_MAX;
+    int min_index = -1;
+    
+    for (int v = 0; v < numVertices; v++) {
+        if (sptSet[v] == 0 && dist[v] <= min) {
+            min = dist[v];
+            min_index = v;
+        }
+    }
+    return min_index;
+}
+
+// Função para imprimir o vetor de distâncias
+void printSolution(int dist[], int numVertices) {
+    printf("Vértice \t Distância até a Origem\n");
+    for (int i = 0; i < numVertices; i++)
+        printf("%d \t\t %d\n", i, dist[i]);
+}
+
+// Função que implementa o algoritmo de Dijkstra para um grafo representado
+// por uma matriz de adjacências
+void dijkstra(No** grafo, int numVertices, int raiz) {
+    int dist[numVertices];     // dist[i] será a distância mínima de raiz até i
+    int sptSet[numVertices];   // sptSet[i] será verdadeiro se o vértice i estiver incluído no caminho mais curto
+
+    // Inicializa todas as distâncias como infinito e sptSet[] como falso
+    for (int i = 0; i < numVertices; i++)
+        dist[i] = INT_MAX, sptSet[i] = 0;
+
+    // A distância do vértice origem para ele mesmo é sempre zero
+    dist[raiz] = 0;
+
+    // Encontre o caminho mais curto para todos os vértices
+    for (int count = 0; count < numVertices-1; count++) {
+        // Escolhe o vértice de menor distância do conjunto de vértices ainda não processados
+        int u = minDistance(dist, sptSet, numVertices);
+        if(u != -1){
+        // Marca o vértice escolhido como processado
+            sptSet[u] = 1;
+
+            Aresta* cursor = grafo[u]->listaAdjacencia;
+            while(cursor != NULL){
+                int v = cursor->destino->posicao;
+                if(!sptSet[v] && dist[u] != INT_MAX && dist[u] + cursor->peso < dist[v]){
+                    dist[v] = dist[u] + cursor->peso;
+                }
+                cursor = cursor->proximaAresta;
+            }
+        }
+    }
+
+    // Imprime o array de distâncias construído
+    printSolution(dist, numVertices);
+}
 
 
 
-void barabaseAlbert(int numVertices, int numInicial){
+No** barabaseAlbert(int numVertices, int numInicial){
     No** grafo = criarGrafo(numVertices);
 
     int novasConexoes = 2;//rand() % numInicial;
@@ -172,28 +239,8 @@ void barabaseAlbert(int numVertices, int numInicial){
             }
         conexoesTotais += novasConexoes;
     }
-}
-
-void escreverOutput(char *caminhoDoArquivo, No** grafo) {
-    FILE *arquivo = fopen(caminhoDoArquivo, "a");
-
-    if(arquivo == NULL) {
-        fprintf(stderr, "Erro ao abrir o arquivo.");
-        return;
-    }
-    
-    int tamanho = tamanhoGrafo(grafo);
-    for(int i = 0; i < tamanho; i++) {
-        fprintf(arquivo, "%d ", grafo[i]->posicao);
-        Aresta* adj = grafo[i]->listaAdjacencia;
-        while(adj != NULL) {
-            fprintf(arquivo, "%d ", adj->destino->posicao);
-            adj = adj->proximaAresta;
-        }
-    }
-
-    fprintf(arquivo, "\n");
-    fclose(arquivo);
+    //imprimirGrafo(grafo, numVertices);
+    return grafo;
 }
 
 No** criarGrafo(int numVertices) {
@@ -211,7 +258,9 @@ int main() {
     int k = 8;   // Cada nó é inicialmente conectado a k vizinhos próximos
     float p = 0.1;  // Probabilidade de reconexão
 
-    barabaseAlbert(n, k);
+    No** grafo = barabaseAlbert(n, k);
+    imprimirGrafo(grafo, n);
+    dijkstra(grafo, n, 0);
 
     //float chance = ((float)rand() / RAND_MAX);
     //printf("%f\n", chance);
