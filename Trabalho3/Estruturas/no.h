@@ -2,6 +2,8 @@
 #define NO_H
 
 #include <stdbool.h>
+#include <stdlib.h>
+#include <stdio.h>
 
 #define LINHAS 10
 #define COLUNAS 10

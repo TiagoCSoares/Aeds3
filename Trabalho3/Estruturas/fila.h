@@ -2,6 +2,7 @@
 #define FILA_H
 
 #include <stdbool.h>
+#include <stdlib.h>
 #include "no.h"
 
 #define LINHAS 10

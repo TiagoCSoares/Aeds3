@@ -1,6 +1,3 @@
-#include <stdlib.h>
-#include <stdio.h>
-
 #include "grafo.h"
 
 No* criarNo(int posicao) {

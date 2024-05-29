@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 
 
@@ -37,20 +38,22 @@ void liberarNos(No* nos[LINHAS][COLUNAS]) {
 
 
 int main() {  
+    //srand(time(NULL));
     criarPastaSeNaoExistir("Output");
     limparArquivo("Output/grafos.txt");
     limparArquivo("Output/closeness.txt");
 
     for(int i = 0; i < 5; i++){
         int numVertices = rand() % 50 + 25;
-        int numVerticesIniciais = rand() % 5 + 5;
+        int numVerticesIniciais = rand() % 5 + 9;
         barabasiAlbert(numVertices, numVerticesIniciais);
     }
 
     for(int i = 0; i < 5; i++){
         int numVertices = rand() % 50 + 25;
-        int numLigacoesIniciais = rand() % 5 + 5;
-        float p = (float)rand() / RAND_MAX * 0.9 + 0.1;
+        int numLigacoesIniciais = rand() % 3 + 4;
+        float p = (float)rand() / RAND_MAX * 0.6 + 0.1;
+        printf("p: %f\n", p);
         wattsStrogatz(numVertices, numLigacoesIniciais, p);
     }
     

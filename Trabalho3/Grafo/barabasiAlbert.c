@@ -12,7 +12,7 @@ void barabasiAlbert(int numVertices, int numInicial){
     for (int i = 1; i < numInicial; i++) {
         // Conecta cada novo nó a um conjunto aleatório de nós existentes
         for (int j = 0; j < novasConexoes; j++) {
-            int target = rand() % i; // Escolhe um nó existente aleatoriamente
+            int target = rand() % numInicial; // Escolhe um nó existente aleatoriamente
 
             // Verifica se a aresta já existe na lista de adjacência de grafo[i]
             Aresta* adj = grafo[i]->listaAdjacencia;

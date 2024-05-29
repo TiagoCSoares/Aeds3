@@ -1,5 +1,4 @@
 #include "pilha.h"
-#include <stdlib.h>
 
 void inicializarPilha(Pilha* pilha) {
     pilha->topo = -1;

@@ -34,16 +34,16 @@ for idx in range(10):
     # Extrair valores de centralidade de proximidade
     valores_closeness = {entrada[0]: entrada[1] for entrada in dados_closeness[idx]}
 
+    # Gerar layout do grafo com o kamada_kawai_layout
+    pos = nx.kamada_kawai_layout(G)
+
     # Normalizar os valores de centralidade de proximidade
     max_closeness = max(valores_closeness.values())
     min_closeness = min(valores_closeness.values())
     closeness_normalizado = {no: (valor - min_closeness) / (max_closeness - min_closeness) for no, valor in valores_closeness.items()}
 
-    # Gerar layout
-    pos = nx.kamada_kawai_layout(G)
-
-    # Gerar cores dos nós com base na centralidade de proximidade
-    cores_nos = [plt.cm.jet(1 - closeness_normalizado.get(no, 0)) for no in G.nodes()]
+    # Gerar cores dos nós com base na centralidade de proximidade normalizada
+    cores_nos = [plt.cm.jet(1 - valor_normalizado) for no, valor_normalizado in closeness_normalizado.items()]
 
     # Desenhar o grafo
     plt.figure()
