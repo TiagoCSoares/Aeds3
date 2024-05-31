@@ -10,6 +10,7 @@
 
 typedef struct No {
     int posicao;
+    int grau;
     int cor;
     struct Aresta* listaAdjacencia;
 } No;

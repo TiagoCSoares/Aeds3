@@ -1,10 +1,11 @@
 #include "grafo.h"
 
 
-void adicionarAresta(Aresta** listaAdjacencia, No* destino, int peso) { //Adicionar peso máximo?
+void adicionarAresta(Aresta** listaAdjacencia, No* destino) { //Adicionar peso máximo?
     Aresta* novaAresta = (Aresta*)malloc(sizeof(Aresta));
     novaAresta->destino = destino;
     novaAresta->proximaAresta = *listaAdjacencia;
+    destino->grau++;
     *listaAdjacencia = novaAresta;
 }
 
