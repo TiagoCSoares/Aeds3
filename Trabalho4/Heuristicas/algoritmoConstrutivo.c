@@ -52,7 +52,7 @@ void heuristicaConstrutivaColoracao(No** grafo, int numVertices, int numCores) {
     }
 
     // printar a cor
-    for (int i = 0; i < numVertices; i++) {
+    /*for (int i = 0; i < numVertices; i++) {
         printf("Vértice %d: cor %d\n", i, grafo[i]->cor);
-    }
+    }*/
 }
