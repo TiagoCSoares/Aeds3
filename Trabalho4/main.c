@@ -70,7 +70,7 @@ int main() {
         int numVerticesIniciais = rand() % 5 + 9;
         char nome[100];
         sprintf(nome, "grafos3color");
-        No** grafo = barabasiAlbert(numVertices, numVerticesIniciais, 3, nome, i);
+        No** grafo = barabasiAlbert(numVertices, numVerticesIniciais, 6, nome, i);
         heuristicaConstrutivaColoracao(grafo, numVertices, 3);
     }
 
@@ -79,7 +79,7 @@ int main() {
         int numVerticesIniciais = rand() % 5 + 9;
         char nome[100];
         sprintf(nome, "grafos4color");
-        No** grafo = barabasiAlbert(numVertices, numVerticesIniciais, 4, nome, i);
+        No** grafo = barabasiAlbert(numVertices, numVerticesIniciais, 8, nome, i);
         heuristicaConstrutivaColoracao(grafo, numVertices, 4);
     }
 

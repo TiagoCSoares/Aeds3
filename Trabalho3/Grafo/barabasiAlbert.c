@@ -68,7 +68,6 @@ void barabasiAlbert(int numVertices, int numInicial){
 
     //imprimirGrafo(grafo, numVertices);
     escreverOutputGrafos("Output/grafos.txt", grafo, numVertices);
-    closeness(grafo, numVertices);
     // Liberar memória
     liberarMemoria(grafo, numVertices);
 }
