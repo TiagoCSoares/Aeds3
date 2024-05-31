@@ -18,6 +18,8 @@
 #include "ManipularArquivos/alterarArquivos.h"
 #include "ManipularArquivos/operacoes.h"
 
+#include "Heuristicas/algoritmoConstrutivo.c"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -68,7 +70,8 @@ int main() {
         int numVerticesIniciais = rand() % 5 + 9;
         char nome[100];
         sprintf(nome, "grafos3color");
-        barabasiAlbert(numVertices, numVerticesIniciais, 3, nome, i);
+        No** grafo = barabasiAlbert(numVertices, numVerticesIniciais, 3, nome, i);
+        heuristicaConstrutivaColoracao(grafo, numVertices, 3);
     }
 
     for(int i = 0; i < 5; i++){
@@ -76,7 +79,8 @@ int main() {
         int numVerticesIniciais = rand() % 5 + 9;
         char nome[100];
         sprintf(nome, "grafos4color");
-        barabasiAlbert(numVertices, numVerticesIniciais, 4, nome, i);
+        No** grafo = barabasiAlbert(numVertices, numVerticesIniciais, 4, nome, i);
+        heuristicaConstrutivaColoracao(grafo, numVertices, 4);
     }
 
    /* for(int i = 0; i < 5; i++){

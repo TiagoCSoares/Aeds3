@@ -1,7 +1,7 @@
 #include "barabasiAlbert.h"
 
 
-void barabasiAlbert(int numVertices, int numInicial, int adjMaximo, char nome[], int numNomes) {
+No** barabasiAlbert(int numVertices, int numInicial, int adjMaximo, char nome[], int numNomes) {
     No** grafo = criarGrafo(numVertices);
 
     srand(time(NULL));
@@ -34,7 +34,7 @@ void barabasiAlbert(int numVertices, int numInicial, int adjMaximo, char nome[],
             }
 
             // Se a aresta não existir, adiciona a nova aresta
-            if (!arestaExiste && grafo[target]->grau < adjMaximo && grafo[i]->grau < adjMaximo) {
+            if (!arestaExiste && grafo[target]->grau <= adjMaximo && grafo[i]->grau <= adjMaximo) {
                 adicionarAresta(&(grafo[i]->listaAdjacencia), grafo[target]);
                 adicionarAresta(&(grafo[target]->listaAdjacencia), grafo[i]);
                 grafo[i]->grau++;
@@ -65,7 +65,7 @@ void barabasiAlbert(int numVertices, int numInicial, int adjMaximo, char nome[],
         int tentativa = 0;
         while (conexoesDoNo[i] == 0 && tentativa < i) { // Limite o número de tentativas
             int index = (rand() % i);
-            if (index != i && grafo[i]->grau < adjMaximo && grafo[index]->grau < adjMaximo) {
+            if (index != i && grafo[i]->grau <= adjMaximo && grafo[index]->grau <= adjMaximo) {
                 adicionarAresta(&(grafo[i]->listaAdjacencia), grafo[index]);
                 adicionarAresta(&(grafo[index]->listaAdjacencia), grafo[i]);
                 grafo[i]->grau++;
@@ -86,6 +86,7 @@ void barabasiAlbert(int numVertices, int numInicial, int adjMaximo, char nome[],
     // Escreve o grafo no arquivo
     escreverOutputGrafos(nomeArquivoGrafo, grafo, numVertices);
 
+    return grafo;
     // Libera memória
     //liberarMemoria(grafo, numVertices);
 }

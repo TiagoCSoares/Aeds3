@@ -8,6 +8,6 @@
 #include "grafo.h"  
 #include "../ManipularArquivos/alterarArquivos.h"
 
-void barabasiAlbert(int numVertices, int numInicial, int adjMaximo, char nome[], int numNomes);
+No** barabasiAlbert(int numVertices, int numInicial, int adjMaximo, char nome[], int numNomes);
 
 #endif
