@@ -4,6 +4,8 @@
 #define LINHAS 10
 #define COLUNAS 10
 
+#include <stdlib.h>
+
 #include "no.h"
 
 

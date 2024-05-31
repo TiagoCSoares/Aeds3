@@ -1,5 +1,4 @@
 #include "fila.h"
-#include <stdlib.h>
 
 void inicializarFila(Fila* fila) {
     fila->frente = 0;

@@ -1,8 +1,6 @@
 #include "closeness.h"
 
 
-
-
 void closeness(No** grafo, int numVertices) {
     // Implementar
     float closeness[numVertices];
@@ -13,6 +11,8 @@ void closeness(No** grafo, int numVertices) {
         for(int j = 0; j < numVertices; j++) {
             soma += dist[j];
         }
-        closeness[i] = (float)soma / (numVertices - 1);
+        closeness[i] = (float)(numVertices-1) / soma;
     }
+
+    escreverOutputCloseness("Output/closeness.txt" ,closeness, numVertices);
 }

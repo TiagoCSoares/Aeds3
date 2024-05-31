@@ -5,7 +5,7 @@
 #include <stdio.h>
 
 #include "../ManipularArquivos/alterarArquivos.h"
-#include "dijkstra.h"
+#include "closeness.h"
 #include "grafo.h"
 
 void wattsStrogatz(int numVertices, int ligacoesIniciais, float p);
