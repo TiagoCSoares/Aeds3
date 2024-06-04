@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "../Estruturas/no.h"
+#include "algoritmoConstrutivo.h"
 
 #define POPULACAO_SIZE 50
 #define NUM_GERACOES 1000

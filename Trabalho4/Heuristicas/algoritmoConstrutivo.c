@@ -14,7 +14,7 @@ int heuristicaConstrutivaColoracao(No** grafo, int numVertices) {
     }
 
     // Organiza de acordo com o grau
-    for (int i = 0; i < numVertices; i++) {
+    /*for (int i = 0; i < numVertices; i++) {
         for (int j = i + 1; j < numVertices; j++) {
             if (grauNo(grafo[i]) < grauNo(grafo[j])) {
                 No* temp = grafo[i];
@@ -22,7 +22,7 @@ int heuristicaConstrutivaColoracao(No** grafo, int numVertices) {
                 grafo[j] = temp;
             }
         }
-    }
+    }*/
 
     // Colorir
     for (int i = 0; i < numVertices; i++) {

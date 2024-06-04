@@ -75,8 +75,8 @@ void process_file(const char *filepath) {
     int maxBuscaLocal = busca_local(grafo, numVertices);
     escreverOutputColors(nomeArquivoGrafo, "Busca Local", maxBuscaLocal);
 
-    int maxEvolutiva = heuristica_evolutiva(grafo, numVertices);
-    escreverOutputColors(nomeArquivoGrafo, "Evolutiva", maxEvolutiva);
+   /* int maxEvolutiva = heuristica_evolutiva(grafo, numVertices);
+    escreverOutputColors(nomeArquivoGrafo, "Evolutiva", maxEvolutiva);*/
 
     snprintf(nomeArquivoGrafo, sizeof(nomeArquivoGrafo), "Output/instances/%s.txt", nome);
 

@@ -1,6 +1,4 @@
-Construtivo: 6
+Construtivo: 7
 
-Busca Local: 2
-
-Evolutiva: 8
+Busca Local: 7
 

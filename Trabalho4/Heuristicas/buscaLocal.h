@@ -6,6 +6,7 @@
 #include <stdbool.h>
 
 #include "../Estruturas/no.h"
+#include "algoritmoConstrutivo.h"
 
 
 void atribuir_cores_aleatorias(No** grafo, int numVertices);

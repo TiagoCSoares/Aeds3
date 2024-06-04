@@ -1,6 +1,4 @@
-Construtivo: 42
+Construtivo: 43
 
-Busca Local: 12
-
-Evolutiva: 41
+Busca Local: 43
 

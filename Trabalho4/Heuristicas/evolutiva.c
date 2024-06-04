@@ -97,6 +97,8 @@ void selecao_pais(int aptidao[], int pai1[], int pai2[], int numVertices) {
     }
 }
 
+
+/*
 // Função principal para a heurística evolutiva
 int heuristica_evolutiva(No** grafo, int numVertices) {
     
@@ -138,6 +140,68 @@ int heuristica_evolutiva(No** grafo, int numVertices) {
     }
 
 
+
+    // Encontrar cores únicas utilizadas
+    bool cores_utilizadas[numCores];
+    for (int i = 0; i < numCores; i++) {
+        cores_utilizadas[i] = false; // Inicializa todas as cores como não utilizadas
+    }
+
+    for (int i = 0; i < numVertices; i++) {
+        cores_utilizadas[grafo[i]->cor] = true; // Marca a cor como utilizada
+    }
+
+    // Contar quantas cores estão sendo utilizadas
+    int cores_utilizadas_count = 0;
+    for (int i = 0; i < numCores; i++) {
+        if (cores_utilizadas[i]) {
+            cores_utilizadas_count++;
+        }
+    }
+
+    return cores_utilizadas_count;
+}*/
+
+
+// Função principal para a heurística evolutiva
+int heuristica_evolutiva(No** grafo, int numVertices) {
+    int numCores = numVertices / 3;
+
+    int populacao[POPULACAO_SIZE][numVertices];
+    int aptidao[POPULACAO_SIZE];
+    int pai1[numVertices], pai2[numVertices], filho[numVertices];
+
+    // Inicialização da população com a solução do algoritmo construtivo
+    inicializar_populacao(grafo, numVertices, numCores, populacao);
+    avaliar_aptidao(grafo, numVertices, populacao, aptidao);
+
+    // Loop das gerações
+    for (int geracao = 0; geracao < NUM_GERACOES; geracao++) {
+        // Seleção dos pais para reprodução
+        selecao_pais(aptidao, pai1, pai2, numVertices);
+
+        // Reprodução (crossover)
+        crossover(populacao[pai1[0]], populacao[pai2[0]], filho, numVertices);
+
+        // Mutação
+        mutacao(filho, numVertices, numCores);
+
+        // Avaliação da aptidão do filho
+        for (int j = 0; j < numVertices; j++) {
+            grafo[j]->cor = filho[j];
+        }
+        aptidao[POPULACAO_SIZE - 1] = calcularConflitos(grafo, numVertices);
+
+        // Atualização da população
+        for (int i = 0; i < POPULACAO_SIZE - 1; i++) {
+            if (aptidao[i] > aptidao[POPULACAO_SIZE - 1]) {
+                for (int j = 0; j < numVertices; j++) {
+                    populacao[i][j] = filho[j];
+                }
+                break;
+            }
+        }
+    }
 
     // Encontrar cores únicas utilizadas
     bool cores_utilizadas[numCores];
