@@ -14,7 +14,7 @@
 #include "algoritmoConstrutivo.h"
 
 #define POPULATION_SIZE 100
-#define MAX_GENERATIONS 1000
+#define MAX_GENERATIONS 100
 #define MUTATION_RATE 0.01
 
 

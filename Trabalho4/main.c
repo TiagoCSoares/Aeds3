@@ -14,7 +14,6 @@
 #include "Estruturas/pilha.h"
 #include "Estruturas/fila.h"
 #include "Grafo/grafo.h"
-#include "Grafo/barabasiAlbert.h"
 #include "ManipularArquivos/alterarArquivos.h"
 #include "ManipularArquivos/operacoes.h"
 #include "ManipularArquivos/lerCol.h"

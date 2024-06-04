@@ -1,0 +1,12 @@
+miles750
+Vertices: 128  Arestas: 4226
+Coloração ótima: 31
+
+Busca Local
+Numero de cores: 33
+Tempo de execução: 0.0246 ms
+
+Evolutiva
+Numero de cores: 32
+Tempo de execução: 0.1601 ms
+

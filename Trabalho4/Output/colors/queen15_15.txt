@@ -1,12 +1,12 @@
-Coloração
+queen15_15
 Vertices: 225  Arestas: 10360
 Coloração ótima: ?
 
 Busca Local
-Numero de cores: 27
-Tempo de execução: 0.1188 ms
+Numero de cores: 26
+Tempo de execução: 0.1261 ms
 
 Evolutiva
 Numero de cores: 28
-Tempo de execução: 0.7332 ms
+Tempo de execução: 0.7487 ms
 

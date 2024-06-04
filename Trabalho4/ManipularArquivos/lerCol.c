@@ -83,15 +83,14 @@ void process_file(const char *filepath) {
     }
 
     
-
+    printf("nomearquivo: %s\n", nome);
 
     char nomeArquivoGrafo[256];
     snprintf(nomeArquivoGrafo, sizeof(nomeArquivoGrafo), "Output/colors/%s.txt", nome);
 
-    escreverCabecalho(nomeArquivoGrafo, "Coloração", numVertices, numArestas, numCores);
+    printf("Processando arquivo %s\n", nome);
+    escreverCabecalho(nomeArquivoGrafo, nome, numVertices, numArestas, numCores);
 
-    //int maxConstrutivo = heuristicaConstrutivaColoracao(grafo, numVertices);
-    //escreverOutputColors(nomeArquivoGrafo, "Construtivo", maxConstrutivo);
 
     inicio = clock();
     int maxBuscaLocal = ILSColoracao(grafo, numVertices, 100, 10);
@@ -112,6 +111,10 @@ void process_file(const char *filepath) {
 
     fclose(file);
 }
+
+
+
+
 
 
 

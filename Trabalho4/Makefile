@@ -2,7 +2,7 @@
 TARGET = main
 
 # Lista de arquivos fonte
-SRCS = main.c Estruturas/fila.c Estruturas/pilha.c Grafo/grafo.c  Grafo/barabasiAlbert.c  ManipularArquivos/alterarArquivos.c ManipularArquivos/operacoes.c ManipularArquivos/lerCol.c Heuristicas/algoritmoConstrutivo.c Heuristicas/evolutiva.c Heuristicas/buscaLocal.c
+SRCS = main.c Estruturas/fila.c Estruturas/pilha.c Grafo/grafo.c ManipularArquivos/alterarArquivos.c ManipularArquivos/operacoes.c ManipularArquivos/lerCol.c Heuristicas/algoritmoConstrutivo.c Heuristicas/evolutiva.c Heuristicas/buscaLocal.c
 
 # Comando de compilação
 CC = gcc

@@ -1,12 +1,12 @@
-Coloração
+queen16_16
 Vertices: 256  Arestas: 12640
 Coloração ótima: ?
 
 Busca Local
 Numero de cores: 26
-Tempo de execução: 0.1812 ms
+Tempo de execução: 0.1966 ms
 
 Evolutiva
-Numero de cores: 25
-Tempo de execução: 1.1092 ms
+Numero de cores: 29
+Tempo de execução: 1.0931 ms
 

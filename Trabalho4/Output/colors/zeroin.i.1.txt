@@ -1,12 +1,12 @@
-Coloração
+zeroin.i.1
 Vertices: 211  Arestas: 4100
 Coloração ótima: 49
 
 Busca Local
 Numero de cores: 50
-Tempo de execução: 0.0806 ms
+Tempo de execução: 0.0881 ms
 
 Evolutiva
 Numero de cores: 51
-Tempo de execução: 0.5385 ms
+Tempo de execução: 0.5858 ms
 
