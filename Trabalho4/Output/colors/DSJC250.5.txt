@@ -1,4 +1,0 @@
-Construtivo: 42
-
-Busca Local: 42
-

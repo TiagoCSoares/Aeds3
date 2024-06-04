@@ -1,4 +1,0 @@
-Construtivo: 64
-
-Busca Local: 64
-

@@ -19,7 +19,7 @@
 #include "ManipularArquivos/operacoes.h"
 #include "ManipularArquivos/lerCol.h"
 
-#include "Heuristicas/algoritmoConstrutivo.c"
+#include "Heuristicas/algoritmoConstrutivo.h"
 
 #include <stdio.h>
 #include <stdlib.h>

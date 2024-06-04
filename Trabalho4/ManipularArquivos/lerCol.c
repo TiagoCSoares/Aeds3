@@ -72,11 +72,11 @@ void process_file(const char *filepath) {
     int maxConstrutivo = heuristicaConstrutivaColoracao(grafo, numVertices);
     escreverOutputColors(nomeArquivoGrafo, "Construtivo", maxConstrutivo);
 
-    int maxBuscaLocal = busca_local(grafo, numVertices);
+    int maxBuscaLocal = ILSColoracao(grafo, numVertices, 100, 10);
     escreverOutputColors(nomeArquivoGrafo, "Busca Local", maxBuscaLocal);
 
-   /* int maxEvolutiva = heuristica_evolutiva(grafo, numVertices);
-    escreverOutputColors(nomeArquivoGrafo, "Evolutiva", maxEvolutiva);*/
+    int maxEvolutiva = algoritmoGenetico(grafo, numVertices);
+    escreverOutputColors(nomeArquivoGrafo, "Evolutiva", maxEvolutiva);
 
     snprintf(nomeArquivoGrafo, sizeof(nomeArquivoGrafo), "Output/instances/%s.txt", nome);
 

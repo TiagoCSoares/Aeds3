@@ -1,4 +1,4 @@
-Construtivo: 125
+Construtivo: 123
 
-Busca Local: 125
+Busca Local: 124
 

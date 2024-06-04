@@ -1,225 +1,161 @@
-// Função para atribuir cores aleatórias aos nós
 #include "evolutiva.h"
 
-void atribuirCoresAleatorias(No** grafo, int numVertices, int numCores) {
-    srand(time(NULL));  // Inicializa a semente aleatória
-    for (int i = 0; i < numVertices; i++) {
-        grafo[i]->cor = rand() % numCores;  // Atribui uma cor aleatória de 0 a numCores-1
-    }
-}
 
-// Função para calcular o número de conflitos no grafo
-int calcularConflitos(No** grafo, int numVertices) {
+int numeroConflitos(No** grafo, int numVertices) {
     int conflitos = 0;
     for (int i = 0; i < numVertices; i++) {
-        No* no_atual = grafo[i];
-        Aresta* adjacente = no_atual->listaAdjacencia;
-        while (adjacente != NULL) {
-            if (no_atual->cor == adjacente->destino->cor) {
+        Aresta* adj = grafo[i]->listaAdjacencia;
+        while (adj != NULL) {
+            if (grafo[i]->cor == adj->destino->cor) {
                 conflitos++;
             }
-            adjacente = adjacente->proximaAresta;
+            adj = adj->proximaAresta;
         }
     }
-    return conflitos / 2;  // Cada conflito é contado duas vezes
+    return conflitos / 2; // Cada conflito é contado duas vezes
 }
 
-// Função para inicializar a população com atribuições de cores aleatórias
-void inicializar_populacao(No** grafo, int numVertices, int numCores, int populacao[][numVertices]) {
-    for (int i = 0; i < POPULACAO_SIZE; i++) {
-        atribuirCoresAleatorias(grafo, numVertices, numCores);
-        for (int j = 0; j < numVertices; j++) {
-            populacao[i][j] = grafo[j]->cor;
-        }
+
+void inicializarIndividuo(Individual* individuo, No** grafo, int numVertices) {
+    // Usar a heurística construtiva para inicializar as cores do grafo
+    heuristicaConstrutivaColoracao(grafo, numVertices);
+
+    // Copiar as cores do grafo para o indivíduo
+    individuo->colors = (int*)malloc(numVertices * sizeof(int));
+    if (individuo->colors == NULL) {
+        fprintf(stderr, "Erro ao alocar memória para individuo->colors\n");
+        exit(EXIT_FAILURE);
     }
-}
-
-// Função para avaliar a aptidão de cada solução na população (número de conflitos)
-void avaliar_aptidao(No** grafo, int numVertices, int populacao[][numVertices], int aptidao[]) {
-    for (int i = 0; i < POPULACAO_SIZE; i++) {
-        for (int j = 0; j < numVertices; j++) {
-            grafo[j]->cor = populacao[i][j];
-        }
-        aptidao[i] = calcularConflitos(grafo, numVertices);
-    }
-}
-
-// Função para realizar o crossover entre dois pais para gerar um filho
-void crossover(int pai1[], int pai2[], int filho[], int numVertices) {
-    // Pontos de corte para o crossover
-    int ponto_corte1 = rand() % numVertices;
-    int ponto_corte2 = rand() % numVertices;
-
-    // Garante que ponto_corte1 < ponto_corte2
-    if (ponto_corte1 > ponto_corte2) {
-        int temp = ponto_corte1;
-        ponto_corte1 = ponto_corte2;
-        ponto_corte2 = temp;
-    }
-
-    // Copia as seções dos pais para o filho
     for (int i = 0; i < numVertices; i++) {
-        if (i < ponto_corte1 || i >= ponto_corte2) {
-            filho[i] = pai1[i];
-        } else {
-            filho[i] = pai2[i];
-        }
+        individuo->colors[i] = grafo[i]->cor;
     }
+    individuo->fitness = numeroConflitos(grafo, numVertices);
 }
 
-// Função para realizar a mutação em um indivíduo (cromossomo)
-void mutacao(int individuo[], int numVertices, int numCores) {
+void liberarIndividuo(Individual* individuo) {
+    free(individuo->colors);
+}
+
+void avaliarIndividuo(Individual* individuo, No** grafo, int numVertices) {
     for (int i = 0; i < numVertices; i++) {
-        if ((double)rand() / RAND_MAX < TAXA_MUTACAO) {
-            individuo[i] = rand() % numCores;
-        }
+        grafo[i]->cor = individuo->colors[i];
+    }
+    individuo->fitness = numeroConflitos(grafo, numVertices);
+}
+
+void inicializarPopulacao(Individual* populacao, No** grafo, int numVertices) {
+    for (int i = 0; i < POPULATION_SIZE; i++) {
+        inicializarIndividuo(&populacao[i], grafo, numVertices);
     }
 }
 
-// Função para selecionar os pais para reprodução com base na aptidão
-void selecao_pais(int aptidao[], int pai1[], int pai2[], int numVertices) {
-    int index_pai1 = 0, index_pai2 = 0;
-    int menor_aptidao = numVertices * numVertices;  // Valor máximo possível para o número de conflitos
+void liberarPopulacao(Individual* populacao) {
+    for (int i = 0; i < POPULATION_SIZE; i++) {
+        liberarIndividuo(&populacao[i]);
+    }
+}
 
-    // Seleciona os dois pais com menor aptidão
-    for (int i = 0; i < POPULACAO_SIZE; i++) {
-        if (aptidao[i] < menor_aptidao) {
-            index_pai2 = index_pai1;
-            index_pai1 = i;
-            menor_aptidao = aptidao[i];
+void avaliarPopulacao(Individual* populacao, No** grafo, int numVertices) {
+    for (int i = 0; i < POPULATION_SIZE; i++) {
+        avaliarIndividuo(&populacao[i], grafo, numVertices);
+    }
+}
+
+int compararIndividuos(const void* a, const void* b) {
+    return ((Individual*)a)->fitness - ((Individual*)b)->fitness;
+}
+
+void selecionarPais(Individual* populacao, Individual* pais) {
+    qsort(populacao, POPULATION_SIZE, sizeof(Individual), compararIndividuos);
+    for (int i = 0; i < POPULATION_SIZE / 2; i++) {
+        pais[i] = populacao[i];
+    }
+}
+
+void cruzar(Individual* pai1, Individual* pai2, Individual* filho, int numVertices) {
+    // Alocar memória para filho->colors se ainda não estiver alocada
+    if (filho->colors == NULL) {
+        filho->colors = (int*)malloc(numVertices * sizeof(int));
+        if (filho->colors == NULL) {
+            fprintf(stderr, "Erro ao alocar memória para filho->colors\n");
+            exit(EXIT_FAILURE);
         }
     }
 
-    // Copia os pais selecionados
+    int pontoCruzamento = rand() % numVertices;
+    for (int i = 0; i < pontoCruzamento; i++) {
+        filho->colors[i] = pai1->colors[i];
+    }
+    for (int i = pontoCruzamento; i < numVertices; i++) {
+        filho->colors[i] = pai2->colors[i];
+    }
+}
+
+void mutar(Individual* individuo, int numVertices) {
     for (int i = 0; i < numVertices; i++) {
-        pai1[i] = index_pai1;
-        pai2[i] = index_pai2;
+        if ((rand() / (double)RAND_MAX) < MUTATION_RATE) {
+            individuo->colors[i] = rand() % numVertices;
+        }
     }
 }
 
-
-/*
-// Função principal para a heurística evolutiva
-int heuristica_evolutiva(No** grafo, int numVertices) {
-    
-    int numCores = numVertices / 3;
-
-    int populacao[POPULACAO_SIZE][numVertices];
-    int aptidao[POPULACAO_SIZE];
-    int pai1[numVertices], pai2[numVertices], filho[numVertices];
-
-    inicializar_populacao(grafo, numVertices, numCores, populacao);
-    avaliar_aptidao(grafo, numVertices, populacao, aptidao);
-
-    // Loop das gerações
-    for (int geracao = 0; geracao < NUM_GERACOES; geracao++) {
-        // Seleção dos pais para reprodução
-        selecao_pais(aptidao, pai1, pai2, numVertices);
-
-        // Reprodução (crossover)
-        crossover(populacao[pai1[0]], populacao[pai2[0]], filho, numVertices);
-
-        // Mutação
-        mutacao(filho, numVertices, numCores);
-
-        // Avaliação da aptidão do filho
-        for (int j = 0; j < numVertices; j++) {
-            grafo[j]->cor = filho[j];
-        }
-        aptidao[POPULACAO_SIZE - 1] = calcularConflitos(grafo, numVertices);
-
-        // Atualização da população
-        for (int i = 0 ; i < POPULACAO_SIZE - 1; i++) {
-            if (aptidao[i] > aptidao[POPULACAO_SIZE - 1]) {
-                for (int j = 0; j < numVertices; j++) {
-                    populacao[i][j] = filho[j];
-                }
-                break;
-            }
-        }
-    }
-
-
-
-    // Encontrar cores únicas utilizadas
-    bool cores_utilizadas[numCores];
-    for (int i = 0; i < numCores; i++) {
-        cores_utilizadas[i] = false; // Inicializa todas as cores como não utilizadas
-    }
+int coresUsadas(Individual* individuo, int numVertices) {
+    int* coresUsadas = (int*)calloc(numVertices, sizeof(int));
+    int numCores = 0;
 
     for (int i = 0; i < numVertices; i++) {
-        cores_utilizadas[grafo[i]->cor] = true; // Marca a cor como utilizada
-    }
-
-    // Contar quantas cores estão sendo utilizadas
-    int cores_utilizadas_count = 0;
-    for (int i = 0; i < numCores; i++) {
-        if (cores_utilizadas[i]) {
-            cores_utilizadas_count++;
+        if (coresUsadas[individuo->colors[i]] == 0) {
+            coresUsadas[individuo->colors[i]] = 1;
+            numCores++;
         }
     }
 
-    return cores_utilizadas_count;
-}*/
+    free(coresUsadas);
+    return numCores;
+}
 
+int algoritmoGenetico(No** grafo, int numVertices) {
+    Individual populacao[POPULATION_SIZE];
+    Individual pais[POPULATION_SIZE / 2];
+    Individual filhos[POPULATION_SIZE];
 
-// Função principal para a heurística evolutiva
-int heuristica_evolutiva(No** grafo, int numVertices) {
-    int numCores = numVertices / 3;
+    inicializarPopulacao(populacao, grafo, numVertices);
+    avaliarPopulacao(populacao, grafo, numVertices);
 
-    int populacao[POPULACAO_SIZE][numVertices];
-    int aptidao[POPULACAO_SIZE];
-    int pai1[numVertices], pai2[numVertices], filho[numVertices];
+    for (int i = 0; i < POPULATION_SIZE; i++) {
+        filhos[i].colors = NULL; // Inicialmente, filhos não têm memória alocada
+    }
 
-    // Inicialização da população com a solução do algoritmo construtivo
-    inicializar_populacao(grafo, numVertices, numCores, populacao);
-    avaliar_aptidao(grafo, numVertices, populacao, aptidao);
+    for (int geracao = 0; geracao < MAX_GENERATIONS; geracao++) {
+        selecionarPais(populacao, pais);
 
-    // Loop das gerações
-    for (int geracao = 0; geracao < NUM_GERACOES; geracao++) {
-        // Seleção dos pais para reprodução
-        selecao_pais(aptidao, pai1, pai2, numVertices);
-
-        // Reprodução (crossover)
-        crossover(populacao[pai1[0]], populacao[pai2[0]], filho, numVertices);
-
-        // Mutação
-        mutacao(filho, numVertices, numCores);
-
-        // Avaliação da aptidão do filho
-        for (int j = 0; j < numVertices; j++) {
-            grafo[j]->cor = filho[j];
+        for (int i = 0; i < POPULATION_SIZE; i++) {
+            int indicePai1 = rand() % (POPULATION_SIZE / 2);
+            int indicePai2 = rand() % (POPULATION_SIZE / 2);
+            cruzar(&pais[indicePai1], &pais[indicePai2], &filhos[i], numVertices);
+            mutar(&filhos[i], numVertices);
+            avaliarIndividuo(&filhos[i], grafo, numVertices);
         }
-        aptidao[POPULACAO_SIZE - 1] = calcularConflitos(grafo, numVertices);
 
-        // Atualização da população
-        for (int i = 0; i < POPULACAO_SIZE - 1; i++) {
-            if (aptidao[i] > aptidao[POPULACAO_SIZE - 1]) {
-                for (int j = 0; j < numVertices; j++) {
-                    populacao[i][j] = filho[j];
-                }
-                break;
-            }
+        for (int i = 0; i < POPULATION_SIZE; i++) {
+            liberarIndividuo(&populacao[i]);
+            populacao[i] = filhos[i];
+            filhos[i].colors = NULL; // Resetar para evitar liberar memória que ainda será usada
+        }
+
+        qsort(populacao, POPULATION_SIZE, sizeof(Individual), compararIndividuos);
+
+        //printf("Geracao %d: Melhor Fitness = %d\n", geracao, populacao[0].fitness);
+
+        if (populacao[0].fitness == 0) {
+            break;
         }
     }
 
-    // Encontrar cores únicas utilizadas
-    bool cores_utilizadas[numCores];
-    for (int i = 0; i < numCores; i++) {
-        cores_utilizadas[i] = false; // Inicializa todas as cores como não utilizadas
-    }
+    int melhorNumCores = coresUsadas(&populacao[0], numVertices);
+    //printf("Melhor solução encontrada com fitness = %d e usando %d cores\n", populacao[0].fitness, melhorNumCores);
 
-    for (int i = 0; i < numVertices; i++) {
-        cores_utilizadas[grafo[i]->cor] = true; // Marca a cor como utilizada
-    }
+    liberarPopulacao(populacao);
 
-    // Contar quantas cores estão sendo utilizadas
-    int cores_utilizadas_count = 0;
-    for (int i = 0; i < numCores; i++) {
-        if (cores_utilizadas[i]) {
-            cores_utilizadas_count++;
-        }
-    }
-
-    return cores_utilizadas_count;
+    return melhorNumCores;
 }

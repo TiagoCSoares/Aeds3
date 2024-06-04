@@ -2,23 +2,42 @@
 #define EVOLUTIVA_H
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <time.h>
+#include <limits.h>
+
+#define POPULATION_SIZE 100
+#define MAX_GENERATIONS 1000
+#define MUTATION_RATE 0.01
 
 #include "../Estruturas/no.h"
 #include "algoritmoConstrutivo.h"
 
-#define POPULACAO_SIZE 50
-#define NUM_GERACOES 1000
-#define TAXA_MUTACAO 0.1
+#define POPULATION_SIZE 100
+#define MAX_GENERATIONS 1000
+#define MUTATION_RATE 0.01
 
 
-void atribuirCoresAleatorias(No** grafo, int numVertices, int numCores);
-int calcularConflitos(No** grafo, int numVertices);
-void inicializar_populacao(No** grafo, int numVertices, int numCores, int populacao[][numVertices]);
-void avaliar_aptidao(No** grafo, int numVertices, int populacao[][numVertices], int aptidao[]);
-void crossover(int pai1[], int pai2[], int filho[], int numVertices);
-void mutacao(int individuo[], int numVertices, int numCores);
-void selecao_pais(int aptidao[], int pai1[], int pai2[], int numVertices);
-int heuristica_evolutiva(No** grafo, int numVertices);
+typedef struct {
+    int* colors;
+    int fitness;
+} Individual;
+
+
+int numeroConflitos(No** grafo, int numVertices);
+void inicializarIndividuo(Individual* individuo, No** grafo, int numVertices);
+void liberarIndividuo(Individual* individuo);
+void avaliarIndividuo(Individual* individuo, No** grafo, int numVertices);
+void inicializarPopulacao(Individual* populacao, No** grafo, int numVertices);
+void liberarPopulacao(Individual* populacao);
+void avaliarPopulacao(Individual* populacao, No** grafo, int numVertices);
+int compararIndividuos(const void* a, const void* b);
+void selecionarPais(Individual* populacao, Individual* pais);
+void cruzar(Individual* pai1, Individual* pai2, Individual* filho, int numVertices);
+void mutar(Individual* individuo, int numVertices);
+int coresUsadas(Individual* individuo, int numVertices);
+int algoritmoGenetico(No** grafo, int numVertices);
+
+
 
 #endif

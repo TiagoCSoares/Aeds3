@@ -9,8 +9,13 @@
 #include "algoritmoConstrutivo.h"
 
 
-void atribuir_cores_aleatorias(No** grafo, int numVertices);
-int calcular_conflitos(No** grafo, int numVertices);
-int busca_local(No** grafo, int numVertices);
+int calcularNumeroConflitos(No** grafo, int numVertices);
+int numCoresUsadas(No** grafo, int numVertices);
+void perturbarSolucao(No** grafo, int numVertices);
+void buscaLocal(No** grafo, int numVertices, int maxTentativas) ;
+int ILSColoracao(No** grafo, int numVertices, int maxIteracoes, int maxTentativasBuscaLocal);
+No** copiarGrafo(No** grafo, int numVertices);
+void copiarSolucao(No** fonte, No** destino, int numVertices);
+void liberarGrafo(No** grafo, int numVertices);
 
 #endif

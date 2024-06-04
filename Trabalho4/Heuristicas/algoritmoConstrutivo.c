@@ -10,11 +10,11 @@ int heuristicaConstrutivaColoracao(No** grafo, int numVertices) {
 
     int cores[numCores];
     for (int i = 0; i < numCores; i++) {
-        cores[i] = i;
+        cores[i] = i+1;
     }
 
     // Organiza de acordo com o grau
-    /*for (int i = 0; i < numVertices; i++) {
+    for (int i = 0; i < numVertices; i++) {
         for (int j = i + 1; j < numVertices; j++) {
             if (grauNo(grafo[i]) < grauNo(grafo[j])) {
                 No* temp = grafo[i];
@@ -22,11 +22,11 @@ int heuristicaConstrutivaColoracao(No** grafo, int numVertices) {
                 grafo[j] = temp;
             }
         }
-    }*/
+    }
 
     // Colorir
     for (int i = 0; i < numVertices; i++) {
-        int cor = 0;
+        int cor = 1;
         while (true) {
 
             bool corDisponivel = true;
@@ -36,7 +36,7 @@ int heuristicaConstrutivaColoracao(No** grafo, int numVertices) {
                     corDisponivel = false;
                     break;
                 }
-                adj = adj->proximaAresta;
+                adj = adj->proximaAresta;  
             }
 
             if (corDisponivel) {
@@ -48,7 +48,7 @@ int heuristicaConstrutivaColoracao(No** grafo, int numVertices) {
     }
 
     // encontrar a maior cor
-    int maiorCor = -1;
+    int maiorCor = 0;
     for (int i = 0; i < numVertices; i++) {
         if(grafo[i]->cor > maiorCor) {
             maiorCor = grafo[i]->cor;

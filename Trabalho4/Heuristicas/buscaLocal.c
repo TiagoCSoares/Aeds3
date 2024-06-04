@@ -1,136 +1,123 @@
 // Função para atribuir cores aleatórias aos nós
 #include "buscaLocal.h"
 
-void atribuir_cores_aleatorias(No** grafo, int numVertices) {
-    srand(time(NULL));  // Inicializa a semente aleatória
 
-    int numCores = numVertices/10;
-    for (int i = 0; i < numVertices; i++) {
-        grafo[i]->cor = rand() % numCores;  
-    }
-}
-
-// Função para calcular o número de conflitos no grafo
-int calcular_conflitos(No** grafo, int numVertices) {
+// Função para calcular o número de conflitos
+int calcularNumeroConflitos(No** grafo, int numVertices) {
     int conflitos = 0;
     for (int i = 0; i < numVertices; i++) {
-        No* no_atual = grafo[i];
-        Aresta* adjacente = no_atual->listaAdjacencia;
-        while (adjacente != NULL) {
-            if (no_atual->cor == adjacente->destino->cor) {
+        Aresta* adj = grafo[i]->listaAdjacencia;
+        while (adj != NULL) {
+            if (grafo[i]->cor == adj->destino->cor) {
                 conflitos++;
             }
-            adjacente = adjacente->proximaAresta;
+            adj = adj->proximaAresta;
         }
     }
-    return conflitos / 2;  // Cada conflito é contado duas vezes
+    return conflitos / 2; // Cada conflito é contado duas vezes
 }
 
+// Função para calcular o número de cores usadas
+int numCoresUsadas(No** grafo, int numVertices) {
+    int cores[numVertices];
+    for (int i = 0; i < numVertices; i++) {
+        cores[i] = 0;
+    }
 
-
-/*
-// Função de busca local para coloração de grafos
-int busca_local(No** grafo, int numVertices) {
-    int iteracoes_max = 1000;  // Número máximo de iterações
-    int iteracao = 0;
-
-    int numCores = numVertices / 3;
-
-    atribuir_cores_aleatorias(grafo, numVertices);
-
-    while (iteracao < iteracoes_max) {
-        int nodo = rand() % numVertices;  // Seleciona um nó aleatoriamente
-        int cor_original = grafo[nodo]->cor;
-        int cor_vizinha = (cor_original + 1) % numCores;  // Troca para a próxima cor
-
-        // Verifica se a troca reduz o número de conflitos
-        grafo[nodo]->cor = cor_vizinha;
-        int conflitos_nova_cor = calcular_conflitos(grafo, numVertices);
-        if (conflitos_nova_cor < calcular_conflitos(grafo, numVertices)) {
-            // Se a troca reduz os conflitos, mantenha a nova cor
-            continue;
-        } else {
-            // Caso contrário, desfaz a troca
-            grafo[nodo]->cor = cor_original;
+    int numCoresUsadas = 0;
+    for (int i = 0; i < numVertices; i++) {
+        if (grafo[i]->cor > 0 && cores[grafo[i]->cor - 1] == 0) {
+            cores[grafo[i]->cor - 1] = 1;
+            numCoresUsadas++;
         }
-
-        iteracao++;
     }
 
-    
-    
-    // Encontrar cores únicas utilizadas
-    bool cores_utilizadas[numCores];
-    for (int i = 0; i < numCores; i++) {
-        cores_utilizadas[i] = false; // Inicializa todas as cores como não utilizadas
-    }
+    return numCoresUsadas;
+}
+
+// Função para perturbar a solução atual
+void perturbarSolucao(No** grafo, int numVertices) {
+    int verticeAleatorio = rand() % numVertices;
+    int novaCor = rand() % numVertices + 1;
+    grafo[verticeAleatorio]->cor = novaCor;
+}
+
+// Função para buscar uma nova solução próxima da atual com limite de tentativas
+void buscaLocal(No** grafo, int numVertices, int maxTentativas) {
+    int menorConflitos = calcularNumeroConflitos(grafo, numVertices);
 
     for (int i = 0; i < numVertices; i++) {
-        cores_utilizadas[grafo[i]->cor] = true; // Marca a cor como utilizada
-    }
-
-    // Contar quantas cores estão sendo utilizadas
-    int cores_utilizadas_count = 0;
-    for (int i = 0; i < numCores; i++) {
-        if (cores_utilizadas[i]) {
-            cores_utilizadas_count++;
+        int corOriginal = grafo[i]->cor;
+        for (int tentativa = 0; tentativa < maxTentativas; tentativa++) {
+            int novaCor = rand() % numVertices + 1;
+            if (novaCor != corOriginal) {
+                grafo[i]->cor = novaCor;
+                int conflitosAtual = calcularNumeroConflitos(grafo, numVertices);
+                if (conflitosAtual < menorConflitos) {
+                    menorConflitos = conflitosAtual;
+                } else {
+                    grafo[i]->cor = corOriginal;
+                }
+            }
         }
     }
+}
 
-    return cores_utilizadas_count;
-}*/
+// Função para resolver o problema de coloração de grafos usando ILS
+int ILSColoracao(No** grafo, int numVertices, int maxIteracoes, int maxTentativasBuscaLocal) {
+    int melhorSolucao = heuristicaConstrutivaColoracao(grafo, numVertices);
+    int melhorNumeroConflitos = calcularNumeroConflitos(grafo, numVertices);
+    int iteracoes = 0;
 
+    while (iteracoes < maxIteracoes) {
+        No** copiaGrafo = copiarGrafo(grafo, numVertices);
+        perturbarSolucao(copiaGrafo, numVertices);
+        buscaLocal(copiaGrafo, numVertices, maxTentativasBuscaLocal);
 
-// Função de busca local para coloração de grafos
-int busca_local(No** grafo, int numVertices) {
-    int iteracoes_max = 1000;  // Número máximo de iterações
-    int iteracao = 0;
+        int numConflitos = calcularNumeroConflitos(copiaGrafo, numVertices);
+        int coresUsadas = numCoresUsadas(copiaGrafo, numVertices);
 
-    int numCores = numVertices / 3;
-    
-    // Usando a solução inicial do algoritmo construtivo
-    int cores_utilizadas_count = heuristicaConstrutivaColoracao(grafo, numVertices);
-
-
-    while (iteracao < iteracoes_max) {
-        int nodo = rand() % numVertices;  // Seleciona um nó aleatoriamente
-        int cor_original = grafo[nodo]->cor;
-        int cor_vizinha = (cor_original + 1) % numCores;  // Troca para a próxima cor
-
-        // Verifica se a troca reduz o número de conflitos
-        grafo[nodo]->cor = cor_vizinha;
-        int conflitos_nova_cor = calcular_conflitos(grafo, numVertices);
-        if (conflitos_nova_cor < calcular_conflitos(grafo, numVertices)) {
-            // Se a troca reduz os conflitos, mantenha a nova cor
-            cores_utilizadas_count -= 1;  // Reduz a contagem de cores utilizadas se houver redução de conflitos
-            continue;
-        } else {
-            // Caso contrário, desfaz a troca
-            grafo[nodo]->cor = cor_original;
+        if (numConflitos == 0) {
+            copiarSolucao(copiaGrafo, grafo, numVertices);
+            liberarGrafo(copiaGrafo, numVertices);
+            return coresUsadas;
         }
 
-        iteracao++;
+        if (numConflitos < melhorNumeroConflitos || (numConflitos == melhorNumeroConflitos && coresUsadas < melhorSolucao)) {
+            melhorNumeroConflitos = numConflitos;
+            melhorSolucao = coresUsadas;
+            copiarSolucao(copiaGrafo, grafo, numVertices);
+        }
+
+        liberarGrafo(copiaGrafo, numVertices);
+        iteracoes++;
     }
 
+    return melhorSolucao;
+}
 
-
-    // Encontrar cores únicas utilizadas
-   /* bool cores_utilizadas[numCores];
-    for (int i = 0; i < numCores; i++) {
-        cores_utilizadas[i] = false; // Inicializa todas as cores como não utilizadas
-    }
-
+// Função para copiar o grafo
+No** copiarGrafo(No** grafo, int numVertices) {
+    No** copia = malloc(numVertices * sizeof(No*));
     for (int i = 0; i < numVertices; i++) {
-        cores_utilizadas[grafo[i]->cor] = true; // Marca a cor como utilizada
+        copia[i] = malloc(sizeof(No));
+        copia[i]->cor = grafo[i]->cor;
+        copia[i]->listaAdjacencia = grafo[i]->listaAdjacencia; // Assumindo que listaAdjacencia não precisa ser copiada profundamente
     }
+    return copia;
+}
 
-    // Contar quantas cores estão sendo utilizadas
+// Função para copiar a solução de um grafo para outro
+void copiarSolucao(No** fonte, No** destino, int numVertices) {
+    for (int i = 0; i < numVertices; i++) {
+        destino[i]->cor = fonte[i]->cor;
+    }
+}
 
-    for (int i = 0; i < numCores; i++) {
-        if (cores_utilizadas[i]) {
-            cores_utilizadas_count++;
-        }
-    }*/
-
-    return cores_utilizadas_count;
+// Função para liberar a memória do grafo
+void liberarGrafo(No** grafo, int numVertices) {
+    for (int i = 0; i < numVertices; i++) {
+        free(grafo[i]);
+    }
+    free(grafo);
 }
