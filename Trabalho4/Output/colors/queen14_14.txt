@@ -3,10 +3,10 @@ Vertices: 196  Arestas: 8372
 Coloração ótima: ?
 
 Busca Local
-Numero de cores: 23
-Tempo de execução: 0.0849 ms
+Numero de cores: 24
+Tempo de execução: 0.0857 ms
 
 Evolutiva
-Numero de cores: 25
-Tempo de execução: 0.4872 ms
+Numero de cores: 23
+Tempo de execução: 0.5154 ms
 
