@@ -2,5 +2,5 @@ Construtivo: 31
 
 Busca Local: 32
 
-Evolutiva: 35
+Evolutiva: 32
 
