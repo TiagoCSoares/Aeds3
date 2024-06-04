@@ -27,15 +27,6 @@
 #include <time.h>
 
 
-/*
-void liberarNos(No* nos[LINHAS][COLUNAS]) {
-    for(int i = 0; i < LINHAS; i++) {
-        for(int j = 0; j < COLUNAS; j++) {
-            free(nos[i][j]);
-        }
-    }
-}*/
-
 
 int main() {  
     srand(time(NULL));
@@ -51,46 +42,6 @@ int main() {
 
     const char *directory_path = "arquivos/instances";
     process_directory(directory_path);
-
-
-    /*for(int i = 0; i < 5; i++){
-        char nome[100];
-        sprintf(nome, "grafos3color");
-        limparArquivo(nome);
-        char nomeArquivoGrafo[256];
-        snprintf(nomeArquivoGrafo, sizeof(nomeArquivoGrafo), "Output/%s/ba%d.txt", nome, i);
-        limparArquivo(nomeArquivoGrafo);
-    }
-
-    for(int i = 0; i < 5; i++){
-        char nome[100];
-        sprintf(nome, "grafos4color");
-        limparArquivo(nome);
-        char nomeArquivoGrafo[256];
-        snprintf(nomeArquivoGrafo, sizeof(nomeArquivoGrafo), "Output/%s/ba%d.txt", nome, i);
-        limparArquivo(nomeArquivoGrafo);
-    }
-
-
-
-
-    for(int i = 0; i < 5; i++){
-        int numVertices = rand() % 50 + 25;
-        int numVerticesIniciais = rand() % 5 + 9;
-        char nome[100];
-        sprintf(nome, "grafos3color");
-        No** grafo = barabasiAlbert(numVertices, numVerticesIniciais, 6, nome, i);
-        heuristicaConstrutivaColoracao(grafo, numVertices, 3);
-    }
-
-    for(int i = 0; i < 5; i++){
-        int numVertices = rand() % 50 + 25;
-        int numVerticesIniciais = rand() % 5 + 9;
-        char nome[100];
-        sprintf(nome, "grafos4color");
-        No** grafo = barabasiAlbert(numVertices, numVerticesIniciais, 8, nome, i);
-        heuristicaConstrutivaColoracao(grafo, numVertices, 4);
-    }*/
 
     return 0;
 }

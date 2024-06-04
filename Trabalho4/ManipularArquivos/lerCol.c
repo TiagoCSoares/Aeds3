@@ -3,6 +3,9 @@
 // Função para processar um arquivo .col
 void process_file(const char *filepath) {
 
+    clock_t inicio, fim;
+    double tempoTotal;
+
     // Verificar a extensão do arquivo
     const char *extension = ".col";
     size_t len_extension = strlen(extension);
@@ -34,18 +37,31 @@ void process_file(const char *filepath) {
 
     char line[MAX_LINE_LENGTH];  // Buffer para armazenar cada linha lida
     int numVertices = -1;
+    int numArestas = -1;
+    int numCores = -1;
     int found_edge_line = 0;
 
     // Verificar a linha que começa com "p edge"
     while (fgets(line, sizeof(line), file)) {
         if (strncmp(line, "p edge", 6) == 0) {
-            if (sscanf(line, "p edge %d %*d", &numVertices) == 1) {
+            if (sscanf(line, "p edge %d %d", &numVertices, &numArestas) == 1) {
                 found_edge_line = 1;
             }
             break;
         }
     }
 
+    // Verificar a linha que começa com b
+    while (fgets(line, sizeof(line), file)) {
+        if (strncmp(line, "b", 1) == 0) {
+            if (sscanf(line, "b %d", &numCores) == 1) {
+                found_edge_line = 1;
+            }
+            break;
+        }
+    }
+
+    
     // Se não encontrou a linha "p edge", retornar sem processar mais
     if (!found_edge_line) {
         fclose(file);
@@ -66,17 +82,28 @@ void process_file(const char *filepath) {
         }
     }
 
+    
+
 
     char nomeArquivoGrafo[256];
     snprintf(nomeArquivoGrafo, sizeof(nomeArquivoGrafo), "Output/colors/%s.txt", nome);
-    int maxConstrutivo = heuristicaConstrutivaColoracao(grafo, numVertices);
-    escreverOutputColors(nomeArquivoGrafo, "Construtivo", maxConstrutivo);
 
+    escreverCabecalho(nomeArquivoGrafo, "Coloração", numVertices, numArestas, numCores);
+
+    //int maxConstrutivo = heuristicaConstrutivaColoracao(grafo, numVertices);
+    //escreverOutputColors(nomeArquivoGrafo, "Construtivo", maxConstrutivo);
+
+    inicio = clock();
     int maxBuscaLocal = ILSColoracao(grafo, numVertices, 100, 10);
-    escreverOutputColors(nomeArquivoGrafo, "Busca Local", maxBuscaLocal);
+    fim = clock();
+    tempoTotal = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+    escreverOutputColors(nomeArquivoGrafo, "Busca Local", maxBuscaLocal, tempoTotal);
 
+    inicio = clock();
     int maxEvolutiva = algoritmoGenetico(grafo, numVertices);
-    escreverOutputColors(nomeArquivoGrafo, "Evolutiva", maxEvolutiva);
+    fim = clock();
+    tempoTotal = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
+    escreverOutputColors(nomeArquivoGrafo, "Evolutiva", maxEvolutiva, tempoTotal);
 
     snprintf(nomeArquivoGrafo, sizeof(nomeArquivoGrafo), "Output/instances/%s.txt", nome);
 

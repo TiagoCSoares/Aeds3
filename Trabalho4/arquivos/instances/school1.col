@@ -5,6 +5,7 @@ c Description: Class Scheduling Graph
 c              Final Schedules, all courses
 c
 p edge 385 19095
+b 0
 e 2 1
 e 4 3
 e 5 1

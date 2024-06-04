@@ -2,6 +2,7 @@ c FILE: queen16_16.col
 c Translated from Stanford GraphBase File: queen16_16.gb
 c Stanford GraphBase ID: gunion(board(16,16,0,0,-1,0,0),board(16,16,0,0,-2,0,0),0,0)
 p edge 256 12640
+b 0
 e 2 1
 e 3 1
 e 3 2

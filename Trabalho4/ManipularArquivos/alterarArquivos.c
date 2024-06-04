@@ -25,7 +25,28 @@ void escreverOutputGrafos(char *caminhoDoArquivo, No** grafo, int numVertices) {
     fclose(arquivo);
 }
 
-void escreverOutputColors(char *caminhoDoArquivo, char* metodo, int numCores) {
+void escreverCabecalho(char *caminhoDoArquivo, char* metodo, int numVertices, int numArestas, int numCores) {
+    FILE *arquivo = fopen(caminhoDoArquivo, "a");
+
+    if(arquivo == NULL) {
+        fprintf(stderr, "Erro ao abrir o arquivo.");
+        return;
+    }
+
+    fprintf(arquivo, "%s\n", metodo);
+    fprintf(arquivo, "Vertices: %d  Arestas: %d\n", numVertices, numArestas);
+
+    if(numCores == 0) {
+        fprintf(arquivo, "Coloração ótima: ?\n");
+    } else {
+        fprintf(arquivo, "Coloração ótima: %d\n", numCores);
+    }
+    fprintf(arquivo, "\n");
+
+    fclose(arquivo);
+}
+
+void escreverOutputColors(char *caminhoDoArquivo, char* metodo, int numCores, double tempo) {
     
         FILE *arquivo = fopen(caminhoDoArquivo, "a");
     
@@ -34,7 +55,9 @@ void escreverOutputColors(char *caminhoDoArquivo, char* metodo, int numCores) {
             return;
         }
     
-        fprintf(arquivo, "%s: %d\n", metodo, numCores);
+        fprintf(arquivo, "%s\n", metodo);
+        fprintf(arquivo, "Numero de cores: %d\n", numCores);
+        fprintf(arquivo, "Tempo de execução: %.4f ms\n", tempo);
     
         fprintf(arquivo, "\n");
         fclose(arquivo);

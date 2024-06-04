@@ -1,6 +1,12 @@
-Construtivo: 35
+Coloração
+Vertices: 385  Arestas: 19095
+Coloração ótima: ?
 
-Busca Local: 36
+Busca Local
+Numero de cores: 36
+Tempo de execução: 2.2419 ms
 
-Evolutiva: 38
+Evolutiva
+Numero de cores: 36
+Tempo de execução: 7.1921 ms
 

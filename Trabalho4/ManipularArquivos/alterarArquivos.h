@@ -11,7 +11,8 @@
 #include "../Grafo/grafo.h"
 
 void escreverOutputGrafos(char *caminhoDoArquivo, No** grafo, int numVertices);
-void escreverOutputColors(char *caminhoDoArquivo, char* metodo, int numCores);
+void escreverCabecalho(char *caminhoDoArquivo, char* metodo, int numVertices, int numArestas, int numCores);
+void escreverOutputColors(char *caminhoDoArquivo, char* metodo, int numCores, double tempo);
 void limparArquivo(char *caminhoDoArquivo);
 void limparArquivosNoDiretorio(const char *diretorio);
 
