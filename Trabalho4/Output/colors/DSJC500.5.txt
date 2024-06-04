@@ -1,0 +1,6 @@
+Construtivo: 70
+
+Busca Local: 50
+
+Evolutiva: 156
+

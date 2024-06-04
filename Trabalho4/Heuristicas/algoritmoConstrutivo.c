@@ -1,9 +1,9 @@
-#include <stdio.h>
-#include "../Estruturas/no.h"
+#include "algoritmoConstrutivo.h"
 
-
-void heuristicaConstrutivaColoracao(No** grafo, int numVertices, int numCores) {
+int heuristicaConstrutivaColoracao(No** grafo, int numVertices) {
     // Inicializa todas as cores dos vértices como não colorido (-1)
+    int numCores = numVertices;
+
     for (int i = 0; i < numVertices; i++) {
         grafo[i]->cor = -1;
     }
@@ -28,10 +28,6 @@ void heuristicaConstrutivaColoracao(No** grafo, int numVertices, int numCores) {
     for (int i = 0; i < numVertices; i++) {
         int cor = 0;
         while (true) {
-            if (cor >= numCores) {
-                printf("Não foi possível colorir o grafo com %d cores\n", numCores);
-                return;
-            }
 
             bool corDisponivel = true;
             Aresta* adj = grafo[i]->listaAdjacencia;
@@ -51,8 +47,13 @@ void heuristicaConstrutivaColoracao(No** grafo, int numVertices, int numCores) {
         }
     }
 
-    // printar a cor
-    /*for (int i = 0; i < numVertices; i++) {
-        printf("Vértice %d: cor %d\n", i, grafo[i]->cor);
-    }*/
+    // encontrar a maior cor
+    int maiorCor = -1;
+    for (int i = 0; i < numVertices; i++) {
+        if(grafo[i]->cor > maiorCor) {
+            maiorCor = grafo[i]->cor;
+        }
+    }
+
+    return maiorCor;
 }

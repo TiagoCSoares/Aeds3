@@ -1,0 +1,6 @@
+Construtivo: 313
+
+Busca Local: 100
+
+Evolutiva: 319
+

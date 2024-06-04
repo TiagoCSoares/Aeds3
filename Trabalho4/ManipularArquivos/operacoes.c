@@ -9,14 +9,18 @@ char *construirNomeArquivoCompleto(char *nomeArquivo, char *extensao, int numero
     return nomeCompleto;
 }
 
-void criarPastaSeNaoExistir(const char *nomePasta) {
+int criarPastaSeNaoExistir(const char *nomePasta) {
     struct dirent *dir;
     DIR *diretorio;
     diretorio = opendir(nomePasta);
+    int foiCriado = 0;
     
     if (!diretorio) {
         mkdir(nomePasta, 0700); // Permissões: 0700 (permissões rwx para o proprietário)
+        foiCriado = 1;
     } else {
         closedir(diretorio);
     }
+
+    return foiCriado;
 }

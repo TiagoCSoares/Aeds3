@@ -8,6 +8,6 @@
 #include <dirent.h>
 
 char *construirNomeArquivoCompleto(char *nomeArquivo, char *extensao, int numero);
-void criarPastaSeNaoExistir(const char *nomePasta);
+int criarPastaSeNaoExistir(const char *nomePasta);
 
 #endif

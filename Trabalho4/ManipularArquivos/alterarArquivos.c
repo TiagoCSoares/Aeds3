@@ -25,7 +25,7 @@ void escreverOutputGrafos(char *caminhoDoArquivo, No** grafo, int numVertices) {
     fclose(arquivo);
 }
 
-void escreverOutputCloseness(char *caminhoDoArquivo, float* closeness, int numVertices) {
+void escreverOutputColors(char *caminhoDoArquivo, char* metodo, int numCores) {
     
         FILE *arquivo = fopen(caminhoDoArquivo, "a");
     
@@ -34,9 +34,7 @@ void escreverOutputCloseness(char *caminhoDoArquivo, float* closeness, int numVe
             return;
         }
     
-        for(int i = 0; i < numVertices; i++) {
-            fprintf(arquivo, "%d %.4f\n", i, closeness[i]);
-        }
+        fprintf(arquivo, "%s: %d\n", metodo, numCores);
     
         fprintf(arquivo, "\n");
         fclose(arquivo);
@@ -49,3 +47,29 @@ void limparArquivo(char *caminhoDoArquivo) {
     FILE *arquivo = fopen(caminhoDoArquivo, "w");
     fclose(arquivo);
 }
+
+
+// Função para limpar todos os arquivos em um diretório
+void limparArquivosNoDiretorio(const char *diretorio) {
+    DIR *dir = opendir(diretorio);
+    if (dir == NULL) {
+        fprintf(stderr, "Erro ao abrir o diretório %s\n", diretorio);
+        return;
+    }
+
+    struct dirent *entry;
+    char caminhoDoArquivo[512];
+
+    while ((entry = readdir(dir)) != NULL) {
+        snprintf(caminhoDoArquivo, sizeof(caminhoDoArquivo), "%s/%s", diretorio, entry->d_name);
+        
+        // Verificar se é um arquivo usando stat
+        struct stat info;
+        if (stat(caminhoDoArquivo, &info) == 0 && S_ISREG(info.st_mode)) {
+            limparArquivo(caminhoDoArquivo);
+        }
+    }
+
+    closedir(dir);
+}
+

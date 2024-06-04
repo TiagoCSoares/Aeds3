@@ -17,6 +17,7 @@
 #include "Grafo/barabasiAlbert.h"
 #include "ManipularArquivos/alterarArquivos.h"
 #include "ManipularArquivos/operacoes.h"
+#include "ManipularArquivos/lerCol.h"
 
 #include "Heuristicas/algoritmoConstrutivo.c"
 
@@ -39,12 +40,20 @@ void liberarNos(No* nos[LINHAS][COLUNAS]) {
 int main() {  
     srand(time(NULL));
 
-
     criarPastaSeNaoExistir("Output");
-    criarPastaSeNaoExistir("Output/grafos3color");
-    criarPastaSeNaoExistir("Output/grafos4color");
+    //criarPastaSeNaoExistir("Output/grafos3color");
+    //criarPastaSeNaoExistir("Output/grafos4color");
+    criarPastaSeNaoExistir("Output/instances");
+    criarPastaSeNaoExistir("Output/colors");
 
-    for(int i = 0; i < 5; i++){
+    limparArquivosNoDiretorio("Output/instances");
+    limparArquivosNoDiretorio("Output/colors");
+
+    const char *directory_path = "arquivos/instances";
+    process_directory(directory_path);
+
+
+    /*for(int i = 0; i < 5; i++){
         char nome[100];
         sprintf(nome, "grafos3color");
         limparArquivo(nome);
@@ -81,26 +90,7 @@ int main() {
         sprintf(nome, "grafos4color");
         No** grafo = barabasiAlbert(numVertices, numVerticesIniciais, 8, nome, i);
         heuristicaConstrutivaColoracao(grafo, numVertices, 4);
-    }
-
-   /* for(int i = 0; i < 5; i++){
-        int numVertices = rand() % 50 + 25;
-        int numLigacoesIniciais = rand() % 3 + 4;
-        float p = (float)rand() / RAND_MAX * 0.6 + 0.1;
-        printf("p: %f\n", p);
-        wattsStrogatz(numVertices, numLigacoesIniciais, p);
     }*/
-    
-    /*// Comando para executar o arquivo Python
-    char comando[100];
-    sprintf(comando, "python3 main.py");
-    
-    // Executar o comando
-    int status = system(comando);
-    
-    // Verificar se a execução foi bem sucedida
-    if (status != 0) 
-        printf("Ocorreu um erro durante a execução do script Python.\n");
-*/
+
     return 0;
 }
