@@ -15,8 +15,8 @@
 #define MAX_LINE_LENGTH 256
 
 
-void process_file(const char *filename);
+void iterarArquivo(const char *filename);
 
-void process_directory(const char *dirpath);
+void executarHeuristicas(const char *dirpath);
 
 #endif

@@ -6,6 +6,8 @@
 #include "../Grafo/grafo.h"
 
 
+
+
 int heuristicaConstrutivaColoracao(No** grafo, int numVertices);
 
 #endif

@@ -4,9 +4,9 @@ Coloração ótima: ?
 
 Busca Local
 Numero de cores: 27
-Tempo de execução: 0.1322 ms
+Tempo de execução: 0.1210 ms
 
 Evolutiva
-Numero de cores: 27
-Tempo de execução: 0.8486 ms
+Numero de cores: 26
+Tempo de execução: 0.7882 ms
 

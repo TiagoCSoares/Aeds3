@@ -63,39 +63,6 @@ void buscaLocal(No** grafo, int numVertices, int maxTentativas) {
     }
 }
 
-// Função para resolver o problema de coloração de grafos usando ILS
-int ILSColoracao(No** grafo, int numVertices, int maxIteracoes, int maxTentativasBuscaLocal) {
-    int melhorSolucao = heuristicaConstrutivaColoracao(grafo, numVertices);
-    int melhorNumeroConflitos = calcularNumeroConflitos(grafo, numVertices);
-    int iteracoes = 0;
-
-    while (iteracoes < maxIteracoes) {
-        No** copiaGrafo = copiarGrafo(grafo, numVertices);
-        perturbarSolucao(copiaGrafo, numVertices);
-        buscaLocal(copiaGrafo, numVertices, maxTentativasBuscaLocal);
-
-        int numConflitos = calcularNumeroConflitos(copiaGrafo, numVertices);
-        int coresUsadas = numCoresUsadas(copiaGrafo, numVertices);
-
-        if (numConflitos == 0) {
-            copiarSolucao(copiaGrafo, grafo, numVertices);
-            liberarGrafo(copiaGrafo, numVertices);
-            return coresUsadas;
-        }
-
-        if (numConflitos < melhorNumeroConflitos || (numConflitos == melhorNumeroConflitos && coresUsadas < melhorSolucao)) {
-            melhorNumeroConflitos = numConflitos;
-            melhorSolucao = coresUsadas;
-            copiarSolucao(copiaGrafo, grafo, numVertices);
-        }
-
-        liberarGrafo(copiaGrafo, numVertices);
-        iteracoes++;
-    }
-
-    return melhorSolucao;
-}
-
 // Função para copiar o grafo
 No** copiarGrafo(No** grafo, int numVertices) {
     No** copia = malloc(numVertices * sizeof(No*));
@@ -121,3 +88,41 @@ void liberarGrafo(No** grafo, int numVertices) {
     }
     free(grafo);
 }
+
+
+// Função para resolver o problema de coloração de grafos usando ILS
+int ILSColoracao(No** grafo, int numVertices) {
+    int melhorSolucao = heuristicaConstrutivaColoracao(grafo, numVertices);
+    int melhorNumeroConflitos = calcularNumeroConflitos(grafo, numVertices);
+    int iteracoes = 0;
+
+    while (iteracoes < MAX_ITERACOES) {
+        No** copiaGrafo = copiarGrafo(grafo, numVertices);
+        perturbarSolucao(copiaGrafo, numVertices);
+        buscaLocal(copiaGrafo, numVertices, MAX_BUSCAS);
+
+        int numConflitos = calcularNumeroConflitos(copiaGrafo, numVertices);
+        int coresUsadas = numCoresUsadas(copiaGrafo, numVertices);
+
+        if (numConflitos == 0) {
+            copiarSolucao(copiaGrafo, grafo, numVertices);
+            liberarGrafo(copiaGrafo, numVertices);
+            return coresUsadas;
+        }
+
+        if (numConflitos < melhorNumeroConflitos || (numConflitos == melhorNumeroConflitos && coresUsadas < melhorSolucao)) {
+            melhorNumeroConflitos = numConflitos;
+            melhorSolucao = coresUsadas;
+            copiarSolucao(copiaGrafo, grafo, numVertices);
+        }
+
+        liberarGrafo(copiaGrafo, numVertices);
+        iteracoes++;
+    }
+
+    return melhorSolucao;
+}
+
+
+
+

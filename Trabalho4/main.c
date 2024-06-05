@@ -1,5 +1,5 @@
 /*
-*   AEDS III - Trabalho Prático 2 - Busca Em Grafos Sem Pesos
+*   AEDS III - Trabalho Prático 4 - Heurísticas para o Problema de Coloração de Grafos
 *
 *   Matrícula                               RA
 *   LUCAS DOGO DE SOUZA PEZZUTO             2020.1.08.026
@@ -31,8 +31,6 @@ int main() {
     srand(time(NULL));
 
     criarPastaSeNaoExistir("Output");
-    //criarPastaSeNaoExistir("Output/grafos3color");
-    //criarPastaSeNaoExistir("Output/grafos4color");
     criarPastaSeNaoExistir("Output/instances");
     criarPastaSeNaoExistir("Output/colors");
 
@@ -40,7 +38,7 @@ int main() {
     limparArquivosNoDiretorio("Output/colors");
 
     const char *directory_path = "arquivos/instances";
-    process_directory(directory_path);
+    executarHeuristicas(directory_path);
 
     return 0;
 }

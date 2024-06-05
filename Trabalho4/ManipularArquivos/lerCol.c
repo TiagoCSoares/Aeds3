@@ -1,7 +1,7 @@
 #include "lerCol.h"
 
 // Função para processar um arquivo .col
-void process_file(const char *filepath) {
+void iterarArquivo(const char *filepath) {
 
     clock_t inicio, fim;
     double tempoTotal;
@@ -82,18 +82,14 @@ void process_file(const char *filepath) {
         }
     }
 
-    
-    printf("nomearquivo: %s\n", nome);
-
     char nomeArquivoGrafo[256];
     snprintf(nomeArquivoGrafo, sizeof(nomeArquivoGrafo), "Output/colors/%s.txt", nome);
 
-    printf("Processando arquivo %s\n", nome);
     escreverCabecalho(nomeArquivoGrafo, nome, numVertices, numArestas, numCores);
 
 
     inicio = clock();
-    int maxBuscaLocal = ILSColoracao(grafo, numVertices, 100, 10);
+    int maxBuscaLocal = ILSColoracao(grafo, numVertices);
     fim = clock();
     tempoTotal = ((double)(fim - inicio)) / CLOCKS_PER_SEC;
     escreverOutputColors(nomeArquivoGrafo, "Busca Local", maxBuscaLocal, tempoTotal);
@@ -120,7 +116,7 @@ void process_file(const char *filepath) {
 
 
 // Função para iterar sobre todos os arquivos .col na pasta instances
-void process_directory(const char *dirpath) {
+void executarHeuristicas(const char *dirpath) {
     DIR *dir = opendir(dirpath);
 
     if (dir == NULL) {
@@ -135,7 +131,7 @@ void process_directory(const char *dirpath) {
         // Verificar se o arquivo tem extensão .col
         if (strstr(entry->d_name, ".col") != NULL) {
             snprintf(filepath, sizeof(filepath), "%s/%s", dirpath, entry->d_name);
-            process_file(filepath);
+            iterarArquivo(filepath);
         }
     }
 
